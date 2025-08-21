@@ -65,9 +65,9 @@
             }
 
         #clickArea {
-            width: 45vw;
+            width: 35vw;
             max-width: 250px;
-            height: 45vw;
+            height: 35vw;
             max-height: 250px;
             margin: 20px auto;
             background: #222;
@@ -169,14 +169,16 @@
             }
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 600px, max-height: 600px) {
             .card, .track-card {
                 width: calc(90% - 12px);
             }
 
             #clickArea {
                 width: 45vw;
+                max-width: 250px;
                 height: 45vw;
+                max-height: 250px;
                 font-size: 4em;
             }
         }
@@ -513,4 +515,5 @@
     </script>
 </body>
 </html>
+
 
