@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hypercar Tycoon Clicker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #111;
+            color: #eee;
+            margin: 0;
+            padding: 130px 0 0 0;
+        }
+
+        #fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #111;
+            color: #fff;
+            padding: 5px 0;
+            border-bottom: 2px solid #444;
+            z-index: 1000;
+        }
+
+            #fixed-header h1 {
+                margin: 4px 0;
+                font-size: 1.5em;
+            }
+
+            #fixed-header div {
+                font-size: 1em;
+                margin: 2px 0;
+            }
+
+        .tabs {
+            margin: 5px 0;
+        }
+
+        .tab-button {
+            background: #333;
+            border: none;
+            padding: 8px 15px;
+            margin: 2px;
+            color: #eee;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.2s ease;
+        }
+
+            .tab-button:hover {
+                background: #444;
+            }
+
+        .tab-content {
+            display: none;
+            padding: 20px 10px;
+        }
+
+            .tab-content.active {
+                display: block;
+            }
+
+        #clickArea {
+            width: 35vw;
+            max-width: 200px;
+            height: 35vw;
+            max-height: 200px;
+            margin: 20px auto;
+            background: #222;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5em;
+            cursor: pointer;
+            margin-top: 10%;
+            transition: transform 0.1s ease;
+            position: relative;
+        }
+
+            #clickArea:active {
+                transform: scale(0.9);
+            }
+
+        .section {
+            border: 1px solid #444;
+            margin: 15px auto;
+            padding: 10px;
+            border-radius: 10px;
+            background: #222;
+            max-width: 1000px;
+        }
+
+        .card, .track-card {
+            background: #333;
+            border-radius: 12px;
+            padding: 4px;
+            margin: 6px;
+            font-size: 0.9em;
+            width: calc(25% - 12px);
+            display: inline-block;
+            vertical-align: top;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+            .card:hover, .track-card:hover {
+                transform: scale(1.05);
+                background: #444;
+            }
+
+            .card img {
+                width: 80px;
+                height: 80px;
+                object-fit: contain;
+            }
+
+            .card p, .track-card p {
+                margin-top: 8px;
+                font-size: 0.85em;
+            }
+
+        /* Supprimer le contour bleu et empêcher la sélection */
+        #clickArea, .card {
+            outline: none;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        .separator {
+            background: #333;
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+            letter-spacing: 1px;
+        }
+
+        .floating-text {
+            position: absolute;
+            font-size: 16px;
+            color: white;
+            font-weight: bold;
+            animation: floatUp 1s ease-out forwards;
+            pointer-events: none;
+            user-select: none;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translate(-50%, -50%) translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(-50%, -50%) translateY(-40px);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .card, .track-card {
+                width: calc(90% - 12px);
+            }
+
+            #clickArea {
+                width: 45vw;
+                height: 45vw;
+                font-size: 4em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="fixed-header">
+        <h1>🏎️ Hypercar Tycoon Clicker</h1>
+        <div id="credits">Crédits : 0</div>
+        <div id="cpcDisplay">Crédits par clic : 1</div>
+        <div id="cpsDisplay">CPS total : 0</div>
+
+        <div class="tabs">
+            <button class="tab-button" onclick="openTab('main')">🏁 Principal</button>
+            <button class="tab-button" onclick="openTab('carsTab')">🏎️ Voitures</button>
+            <button class="tab-button" onclick="openTab('upgradesTab')">⚙️ Améliorations</button>
+            <button class="tab-button" onclick="openTab('tracksTab')">🏟️ Circuits</button>
+        </div>
+    </div>
+
+    <div id="main" class="tab-content active">
+        <div id="clickArea">🏆</div>
+    </div>
+
+    <div id="carsTab" class="tab-content">
+        <div class="section">
+            <h2>Voitures</h2>
+            <div id="cars"></div>
+        </div>
+    </div>
+
+    <div id="upgradesTab" class="tab-content">
+        <div class="section">
+            <h2>Améliorations</h2>
+            <div id="upgrades"></div>
+        </div>
+    </div>
+
+    <div id="tracksTab" class="tab-content">
+        <div class="section">
+            <h2>Circuits</h2>
+            <div id="tracks"></div>
+        </div>
+    </div>
+
+    <script>
+        let credits = 0;
+        let totalCPS = 0;
+        let baseClickValue = 1;
+
+        const cars = [
+            // 🚗 Communes
+            { type: "separator", label: "🚗 Communes" },
+            { name: "Porsche Cayman", baseCost: 25, cps: 1, count: 0 },
+            { name: "Audi R8", baseCost: 120, cps: 3, count: 0 },
+            { name: "Mercedes AMG GT", baseCost: 250, cps: 5, count: 0 },
+            { name: "Aston Martin Vantage", baseCost: 400, cps: 8, count: 0 },
+            { name: "Nissan 370Z", baseCost: 600, cps: 10, count: 0 },
+            { name: "Toyota Supra Mk5", baseCost: 750, cps: 12, count: 0 },
+            { name: "Ford Mustang GT", baseCost: 900, cps: 15, count: 0 },
+            { name: "Chevrolet Camaro ZL1", baseCost: 1100, cps: 18, count: 0 },
+            { name: "BMW M4", baseCost: 1300, cps: 20, count: 0 },
+            { name: "Lotus Elise", baseCost: 1500, cps: 22, count: 0 },
+
+            // 🏎️ Rares
+            { type: "separator", label: "🏎️ Rares" },
+            { name: "Ferrari F8 Tributo", baseCost: 5000, cps: 30, count: 0 },
+            { name: "Lamborghini Aventador", baseCost: 12000, cps: 50, count: 0 },
+            { name: "Porsche 911 GT3 RS", baseCost: 20000, cps: 75, count: 0 },
+            { name: "McLaren 720S", baseCost: 35000, cps: 100, count: 0 },
+            { name: "Maserati MC20", baseCost: 50000, cps: 150, count: 0 },
+            { name: "Audi RS7", baseCost: 65000, cps: 200, count: 0 },
+            { name: "Jaguar F-Type SVR", baseCost: 85000, cps: 250, count: 0 },
+            { name: "Corvette C8 Z06", baseCost: 100000, cps: 300, count: 0 },
+            { name: "Lexus LFA", baseCost: 140000, cps: 400, count: 0 },
+            { name: "Alpine A110S", baseCost: 180000, cps: 500, count: 0 },
+
+            // 🔥 Épiques
+            { type: "separator", label: "🔥 Épiques" },
+            { name: "Ferrari LaFerrari", baseCost: 250000, cps: 750, count: 0 },
+            { name: "Porsche 918 Spyder", baseCost: 400000, cps: 1000, count: 0 },
+            { name: "Mercedes SLR McLaren", baseCost: 600000, cps: 1500, count: 0 },
+            { name: "Aston Martin Vulcan", baseCost: 900000, cps: 2000, count: 0 },
+            { name: "Pagani Utopia", baseCost: 1200000, cps: 3000, count: 0 },
+            { name: "Ferrari SF90 Stradale", baseCost: 1500000, cps: 4000, count: 0 },
+            { name: "Lamborghini Huracán Performante", baseCost: 2000000, cps: 5000, count: 0 },
+            { name: "Ford GT (2017)", baseCost: 2500000, cps: 6000, count: 0 },
+            { name: "Rimac Nevera", baseCost: 3200000, cps: 8000, count: 0 },
+            { name: "Lotus Evija", baseCost: 4000000, cps: 10000, count: 0 },
+            { name: "De Tomaso P72", baseCost: 4800000, cps: 12000, count: 0 },
+
+            // 🏆 Légendaires
+            { type: "separator", label: "🏆 Légendaires" },
+            { name: "Bugatti Chiron", baseCost: 6000000, cps: 15000, count: 0 },
+            { name: "Aston Martin Valkyrie", baseCost: 8000000, cps: 20000, count: 0 },
+            { name: "McLaren P1", baseCost: 10000000, cps: 25000, count: 0 },
+            { name: "Lamborghini Veneno", baseCost: 12000000, cps: 30000, count: 0 },
+            { name: "Ferrari F40", baseCost: 16000000, cps: 40000, count: 0 },
+            { name: "Porsche 911 GT1 Straßenversion", baseCost: 20000000, cps: 50000, count: 0 },
+            { name: "Koenigsegg Agera", baseCost: 24000000, cps: 60000, count: 0 },
+            { name: "Pagani Huayra", baseCost: 30000000, cps: 75000, count: 0 },
+            { name: "Ferrari Enzo", baseCost: 40000000, cps: 100000, count: 0 },
+            { name: "Lamborghini Miura", baseCost: 48000000, cps: 120000, count: 0 },
+
+            // 🌌 Mythiques
+            { type: "separator", label: "🌌 Mythiques" },
+            { name: "Mercedes AMG ONE", baseCost: 60000000, cps: 400000, count: 0 },
+            { name: "Bugatti Tourbillon", baseCost: 80000000, cps: 500000, count: 0 },
+            { name: "McLaren F1", baseCost: 100000000, cps: 600000, count: 0 },
+            { name: "Koenigsegg Jesko", baseCost: 120000000, cps: 750000, count: 0 },
+            { name: "Koenigsegg Jesko Absolute", baseCost: 150000000, cps: 1000000, count: 0 },
+            { name: "SSC Tuatara", baseCost: 200000000, cps: 1500000, count: 0 },
+            { name: "Bugatti Veyron Super Sport", baseCost: 250000000, cps: 2000000, count: 0 },
+            { name: "Hennessey Venom F5", baseCost: 300000000, cps: 2500000, count: 0 },
+            { name: "Apollo IE", baseCost: 350000000, cps: 3000000, count: 0 },
+            { name: "Devel Sixteen", baseCost: 400000000, cps: 4000000, count: 0 },
+            { name: "Ferrari 250 GTO", baseCost: 500000000, cps: 5000000, count: 0 },
+            { name: "Mazda 787B", baseCost: 600000000, cps: 6000000, count: 0 },
+        ];
+
+        const upgrades = [
+            { name: "Turbo niv.1 👆", cost: 100, effect: () => { baseClickValue *= 1.2; }, desc: "Un petit coup de boost au démarrage" },
+            { name: "Turbo niv.2 👆", cost: 500, effect: () => { baseClickValue *= 1.2; }, desc: "Encore plus de punch dans vos clics" },
+            { name: "Pilote Amateur 🏎️", cost: 650, effect: () => { totalCPS *= 1.15; }, desc: "Un pilote motivé pour booster vos gains" },
+            { name: "Transmission sportive ⚙️", cost: 1000, effect: () => { baseClickValue *= 1.25; }, desc: "Une transmission qui réagit vite" },
+            { name: "Systeme Nitro ⚡", cost: 1200, effect: () => { totalCPS *= 1.12; }, desc: "Un petit coup de nitro bien placé" },
+            { name: "Freinage optimisé 🛑", cost: 1500, effect: () => { baseClickValue *= 1.2; }, desc: "Freinez mieux pour accélérer ensuite" },
+            { name: "Transmission Course ⚙️", cost: 1600, effect: () => { totalCPS *= 1.15; }, desc: "Transmission taillée pour la course" },
+            { name: "Turbo niv.3 👆", cost: 2500, effect: () => { baseClickValue *= 1.3; }, desc: "Boost supplémentaire pour vos clics" },
+            { name: "DRS ⚙️", cost: 3000, effect: () => { totalCPS *= 1.2; }, desc: "Ailes ajustées pour glisser plus vite" },
+            { name: "Turbo niv.4 👆", cost: 4000, effect: () => { baseClickValue *= 1.35; }, desc: "Turbo puissant pour aller plus loin" },
+            { name: "Moteur Allégé ⚙️", cost: 5000, effect: () => { totalCPS *= 1.25; }, desc: "Un moteur léger pour plus de réactivité" },
+            { name: "Pilote Pro 🏎️", cost: 5000, effect: () => { baseClickValue *= 1.25; }, desc: "Un vrai pro aux commandes" },
+            { name: "Freinage Dégréssif 🛑", cost: 10000, effect: () => { totalCPS *= 1.3; }, desc: "Freinage progressif pour mieux contrôler" },
+            { name: "Pit-stop rapide 🏁", cost: 10000, effect: () => { baseClickValue *= 1.3; }, desc: "Arrêts aux stands efficaces" },
+            { name: "Publicité 📺", cost: 12000, effect: () => { totalCPS *= 1.35; }, desc: "Faites parler de vous partout" },
+            { name: "Turbo niv.5 👆", cost: 15000, effect: () => { baseClickValue *= 1.4; }, desc: "Le turbo ultime pour vos clics" },
+            { name: "Aero Actif 🏎️", cost: 15000, effect: () => { totalCPS *= 1.4; }, desc: "Aérodynamique qui booste la vitesse" },
+            { name: "Infos Ingé 🎙️", cost: 15000, effect: () => { baseClickValue *= 1.35; }, desc: "Conseils ingénieux pour avancer" },
+            { name: "ERS ⚡", cost: 35000, effect: () => { totalCPS *= 1.5; }, desc: "Énergie récupérée pour un coup de pouce" },
+            { name: "Pilote Légendaire 🏎️", cost: 40000, effect: () => { baseClickValue *= 1.4; }, desc: "Une légende pour inspirer vos gains" },
+            { name: "Pneus Hard 🛞", cost: 40000, effect: () => { totalCPS *= 1.45; }, desc: "Pneus résistants pour plus de stabilité" },
+            { name: "Pneus Medium 🛞", cost: 40000, effect: () => { baseClickValue *= 1.35; }, desc: "Pneus équilibrés pour la performance" },
+            { name: "Chassi Aluminium 🚗", cost: 45000, effect: () => { totalCPS *= 1.5; }, desc: "Un châssis léger et solide" },
+            { name: "Plaquette De Freins Course ⚙️", cost: 50000, effect: () => { baseClickValue *= 1.4; }, desc: "Un bon freinage pour une bonne accélération" },
+            { name: "Chassi Fibre De Carbon 🚗", cost: 55000, effect: () => { totalCPS *= 1.55; }, desc: "Un châssis ultra léger pour plus de vitesse" },
+            { name: "Moteur hybride ⚡", cost: 60000, effect: () => { baseClickValue *= 1.45; }, desc: "Puissance hybride pour une course efficace" },
+            { name: "Pneus Soft 🛞", cost: 100000, effect: () => { totalCPS *= 1.6; }, desc: "Pneus ultra adhérents pour des virages serrés" },
+            { name: "Sponsor 💰", cost: 200000, effect: () => { baseClickValue *= 1.5; }, desc: "Soutien financier pour progresser" },
+            { name: "Max Versappen 🏎️", cost: 3300000, effect: () => { totalCPS += 1.8; }, desc: "Un pilote rapide et précis" },
+            { name: "Ayrton Senna 🏎️", cost: 27000000, effect: () => { baseClickValue *= 1.6; }, desc: "Une légende du volant pour vous guider" },
+            { name: "Lewis Hamilton 🏎️", cost: 4400000000, effect: () => { totalCPS += 2; }, desc: "Un champion pour maximiser vos gains" },
+        ];
+
+        const tracks = [
+            // Circuits faciles / vitesse pure
+            { name: "Red Bull Ring", cost: 25000, effect: () => { totalCPS += 200; } },
+            { name: "Monza", cost: 50000, effect: () => { totalCPS += 800; } },
+            { name: "Circuit Paul Ricard", cost: 100000, effect: () => { totalCPS += 1200; } },
+            { name: "Silverstone", cost: 150000, effect: () => { totalCPS += 1500; } },
+            { name: "Suzuka", cost: 180000, effect: () => { totalCPS += 1600; } },
+            { name: "Autodromo Nazionale di Monza GP", cost: 200000, effect: () => { totalCPS += 1700; } },
+            { name: "Circuit de Zandvoort", cost: 220000, effect: () => { totalCPS += 1800; } },
+
+            // Circuits moyens / techniques
+            { name: "Daytona International Speedway", cost: 200000, effect: () => { totalCPS += 1800; } },
+            { name: "Sebring International Raceway", cost: 250000, effect: () => { totalCPS += 2000; } },
+            { name: "Fuji Speedway", cost: 300000, effect: () => { totalCPS += 2200; } },
+            { name: "Circuit des Amériques – Austin", cost: 350000, effect: () => { totalCPS += 2400; } },
+            { name: "Imola – Autodromo Enzo e Dino Ferrari", cost: 400000, effect: () => { totalCPS += 2500; } },
+            { name: "Hungaroring", cost: 420000, effect: () => { totalCPS += 2600; } },
+            { name: "Circuit de Baku ", cost: 450000, effect: () => { totalCPS += 2700; } },
+
+            // Circuits difficiles / très techniques
+            { name: "Spa-Francorchamps", cost: 400000, effect: () => { totalCPS += 2700; } },
+            { name: "Le Castellet – Paul Ricard", cost: 500000, effect: () => { totalCPS += 3100; } },
+            { name: "Circuit de Monaco", cost: 550000, effect: () => { totalCPS += 3300; } },
+            { name: "Interlagos – Autódromo José Carlos Pace", cost: 600000, effect: () => { totalCPS += 3500; } },
+            { name: "Circuit de Barcelone-Catalogne", cost: 700000, effect: () => { totalCPS += 4000; } },
+            { name: "Circuit de Shanghai", cost: 750000, effect: () => { totalCPS += 4200; } },
+            { name: "Circuit de Singapour", cost: 800000, effect: () => { totalCPS += 4400; } },
+            { name: "Circuit de Melbourne – Albert Park", cost: 850000, effect: () => { totalCPS += 4600; } },
+
+            // Circuits mythiques / légendaires
+            { name: "Brands Hatch", cost: 1200000, effect: () => { totalCPS += 5200; } },
+            { name: "Hockenheimring", cost: 1300000, effect: () => { totalCPS += 5400; } },
+            { name: "Abu Dhabi Yas Marina", cost: 1500000, effect: () => { totalCPS += 5600; } },
+            { name: "Bahrain International Circuit", cost: 1600000, effect: () => { totalCPS += 5800; } },
+            { name: "Le Mans", cost: 24000000, effect: () => { totalCPS += 6500; } },
+            { name: "Nurbürgring Nordschleife", cost: 1000000000, effect: () => { totalCPS += 8000; } },
+
+        ];
+
+        function formatNumber(num) {
+            num = Math.floor(num);
+            if (num >= 1e9) return (num / 1e9).toFixed(1).replace(/\.0$/, "") + "B";
+            if (num >= 1e6) return (num / 1e6).toFixed(1).replace(/\.0$/, "") + "M";
+            if (num >= 1e3) return (num / 1e3).toFixed(1).replace(/\.0$/, "") + "K";
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        function updateCreditsDisplay() {
+            document.getElementById("credits").innerText = "Crédits : " + formatNumber(credits);
+            document.getElementById("cpcDisplay").innerText = "Crédits par clic : " + (Math.round(baseClickValue * 100) / 100);
+            document.getElementById("cpsDisplay").innerText = "CPS total : " + formatNumber(totalCPS);
+        }
+
+        function renderShop() {
+            // Voitures
+            const carDiv = document.getElementById("cars");
+            carDiv.innerHTML = "";
+            cars.forEach((car) => {
+                if (car.type === "separator") {
+                    const sep = document.createElement("div");
+                    sep.className = "separator";
+                    sep.textContent = car.label;
+                    carDiv.appendChild(sep);
+                } else {
+                    const cost = Math.floor(car.baseCost * Math.pow(1.15, car.count));
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHTML = `
+    <p>
+        ${car.name}<br>
+        💰 ${formatNumber(cost)}<br>
+        🚗 ${car.count}<br>
+        ⚡ CPS unitaire : ${car.cps}<br> <!-- 🆕 Ligne ajoutée -->
+        ⚡ CPS total : ${car.count * car.cps}
+    </p>
+`;
+                    card.onclick = () => {
+                        if (credits >= cost) {
+                            credits -= cost;
+                            car.count++;
+                            totalCPS += car.cps;
+                            updateCreditsDisplay();
+                            renderShop();
+                        }
+                    }
+                    carDiv.appendChild(card);
+                }
+            });
+
+            // Améliorations
+            const upgDiv = document.getElementById("upgrades");
+            upgDiv.innerHTML = "";
+            upgrades.forEach((upg) => {
+                if (!upg.bought) {
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHTML = `<p>${upg.name}<br>💰 ${formatNumber(upg.cost)}<br>${upg.desc}</p>`;
+                    card.onclick = () => {
+                        if (credits >= upg.cost) {
+                            credits -= upg.cost;
+                            upg.bought = true;
+                            upg.effect();
+                            updateCreditsDisplay();
+                            renderShop();
+                        }
+                    }
+                    upgDiv.appendChild(card);
+                }
+            });
+
+            // Circuits
+            const trkDiv = document.getElementById("tracks");
+            trkDiv.innerHTML = "";
+            tracks.forEach((trk) => {
+                if (!trk.bought) {
+                    const card = document.createElement("div");
+                    card.className = "track-card";
+                    card.innerHTML = `<p>${trk.name}<br>💰 ${formatNumber(trk.cost)}<br>${trk.desc ? trk.desc : ""}</p>`;
+                    card.onclick = () => {
+                        if (credits >= trk.cost) {
+                            credits -= trk.cost;
+                            trk.bought = true;
+                            trk.effect();
+                            updateCreditsDisplay();
+                            renderShop();
+                        }
+                    }
+                    trkDiv.appendChild(card);
+                }
+            });
+        }
+
+        const clickArea = document.getElementById("clickArea");
+
+        function handleClick(e) {
+            e.preventDefault();
+            const gain = Math.round(baseClickValue * 100) / 100;
+            credits += gain;
+            updateCreditsDisplay();
+
+            const floating = document.createElement("span");
+            floating.className = "floating-text";
+            floating.innerText = "+" + formatNumber(gain);
+
+            const rect = clickArea.getBoundingClientRect();
+            let x, y;
+
+            if (e.touches) { // mobile
+                x = e.touches[0].clientX - rect.left;
+                y = e.touches[0].clientY - rect.top;
+            } else { // desktop
+                x = e.clientX - rect.left;
+                y = e.clientY - rect.top;
+            }
+
+            floating.style.left = x + "px";
+            floating.style.top = y + "px";
+            clickArea.appendChild(floating);
+
+            setTimeout(() => floating.remove(), 1000);
+        }
+
+        clickArea.addEventListener("click", handleClick);
+        clickArea.addEventListener("touchstart", handleClick);
+
+        setInterval(() => {
+            credits += totalCPS;
+            updateCreditsDisplay();
+        }, 1000);
+
+        function openTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        renderShop();
+        updateCreditsDisplay();
+    </script>
+</body>
+</html>
