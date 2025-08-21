@@ -173,7 +173,13 @@
             .card, .track-card {
                 width: calc(90% - 12px);
             }
-
+            /* Supprimer le contour bleu et empêcher la sélection */
+            #clickArea, .card {
+                outline: none;
+                user-select: none;
+                -webkit-user-select: none;
+                -webkit-touch-callout: none;
+            }
             #clickArea {
                 width: 45vw;
                 max-width: 300px;
@@ -515,6 +521,7 @@
     </script>
 </body>
 </html>
+
 
 
 
