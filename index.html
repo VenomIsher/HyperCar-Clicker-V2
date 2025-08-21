@@ -181,10 +181,10 @@
                 -webkit-touch-callout: none;
             }
 
-             #clickArea:active {
-                transform: scale(0.9);
-            }
-            
+                #clickArea:active {
+                    transform: scale(0.9);
+                }
+
             #clickArea {
                 width: 100vw;
                 max-width: 300px;
@@ -385,6 +385,56 @@
 
         ];
 
+        function saveGame() {
+            const saveData = {
+                credits,
+                totalCPS,
+                baseClickValue,
+                cars: cars.map(car => ({ count: car.count })),
+                upgrades: upgrades.map(upg => ({ bought: !!upg.bought })),
+                tracks: tracks.map(trk => ({ bought: !!trk.bought })),
+                lastSave: Date.now()
+            };
+            localStorage.setItem("hypercarSave", JSON.stringify(saveData));
+        }
+
+        function loadGame() {
+            const saved = localStorage.getItem("hypercarSave");
+            if (saved) {
+                const data = JSON.parse(saved);
+
+                // Calcul bonus hors ligne
+                const offlineTime = (Date.now() - data.lastSave) / 1000; // en secondes
+                const offlineCredits = (data.totalCPS || 0) * offlineTime;
+                if (offlineCredits > 0) {
+                    alert(`Vous avez gagné ${formatNumber(offlineCredits)} crédits hors ligne !`);
+                }
+
+                credits = (data.credits || 0) + offlineCredits;
+                totalCPS = data.totalCPS || 0;
+                baseClickValue = data.baseClickValue || 1;
+
+                // Restaurer les voitures
+                if (data.cars) {
+                    data.cars.forEach((c, i) => { if (cars[i]) cars[i].count = c.count || 0; });
+                }
+
+                // Restaurer les upgrades
+                if (data.upgrades) {
+                    data.upgrades.forEach((u, i) => { if (upgrades[i]) upgrades[i].bought = !!u.bought; });
+                }
+
+                // Restaurer les tracks
+                if (data.tracks) {
+                    data.tracks.forEach((t, i) => { if (tracks[i]) tracks[i].bought = !!t.bought; });
+                }
+
+                updateCreditsDisplay();
+                renderShop();
+            }
+        }
+
+
         function formatNumber(num) {
             num = Math.floor(num);
             if (num >= 1e9) return (num / 1e9).toFixed(1).replace(/\.0$/, "") + "B";
@@ -414,13 +464,13 @@
                     const card = document.createElement("div");
                     card.className = "card";
                     card.innerHTML = `
-    <p>
-        ${car.name}<br>
-        💰 ${formatNumber(cost)}<br>
-        🚗 ${car.count}<br>
-        ⚡ CPS unitaire : ${car.cps}<br> <!-- 🆕 Ligne ajoutée -->
-        ⚡ CPS total : ${car.count * car.cps}
-    </p>
+        <p>
+            ${car.name}<br>
+            💰 ${formatNumber(cost)}<br>
+            🚗 ${car.count}<br>
+            ⚡ CPS unitaire : ${formatNumber(car.cps) }<br> <!-- 🆕 Ligne ajoutée -->
+            ⚡ CPS total : ${formatNumber(car.count * car.cps) }
+        </p>
 `;
                     card.onclick = () => {
                         if (credits >= cost) {
@@ -429,6 +479,7 @@
                             totalCPS += car.cps;
                             updateCreditsDisplay();
                             renderShop();
+                            saveGame();
                         }
                     }
                     carDiv.appendChild(card);
@@ -450,6 +501,7 @@
                             upg.effect();
                             updateCreditsDisplay();
                             renderShop();
+                            saveGame();
                         }
                     }
                     upgDiv.appendChild(card);
@@ -471,6 +523,7 @@
                             trk.effect();
                             updateCreditsDisplay();
                             renderShop();
+                            saveGame();
                         }
                     }
                     trkDiv.appendChild(card);
@@ -514,6 +567,7 @@
         setInterval(() => {
             credits += totalCPS;
             updateCreditsDisplay();
+            setInterval(saveGame, 15000);
         }, 1000);
 
         function openTab(tabId) {
@@ -524,33 +578,7 @@
 
         renderShop();
         updateCreditsDisplay();
+        loadGame();
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
