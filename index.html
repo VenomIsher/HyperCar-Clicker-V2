@@ -633,7 +633,7 @@
 
         function updateCreditsDisplay() {
             document.getElementById("credits").innerText = "Crédits : " + formatNumber(credits);
-            document.getElementById("cpcDisplay").innerText = "Crédits par clic : " + (Math.round(baseClickValue * 100) / 100);
+            document.getElementById("cpcDisplay").innerText = "Crédits par clic : " +formatnumber((Math.round(baseClickValue * 100) / 100));
             document.getElementById("cpsDisplay").innerText = "CPS total : " + formatNumber(totalCPS);
         }
 
@@ -887,3 +887,4 @@
     </script>
 </body>
 </html>
+
