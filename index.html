@@ -491,7 +491,7 @@
             { name: "Moteur hybride ⚡", cost: 60000, effect: () => { baseClickValue *= 1.45; }, desc: "Puissance hybride pour une course efficace" },
             { name: "Pneus Soft 🛞", cost: 100000, effect: () => { totalCPS *= 1.6; }, desc: "Pneus ultra adhérents pour des virages serrés" },
             { name: "Sponsor 💰", cost: 200000, effect: () => { baseClickValue *= 1.5; }, desc: "Soutien financier pour progresser" },
-            { name: "Max Versappen 🏎️", cost: 3300000, effect: () => { totalCPS += 1.8; }, desc: "Un pilote rapide et précis" },
+            { name: "Max Verstappen 🏎️", cost: 3300000, effect: () => { totalCPS += 1.8; }, desc: "Un pilote rapide et précis" },
             { name: "Ayrton Senna 🏎️", cost: 27000000, effect: () => { baseClickValue *= 1.6; }, desc: "Une légende du volant pour vous guider" },
             { name: "Lewis Hamilton 🏎️", cost: 4400000000, effect: () => { totalCPS += 2; }, desc: "Un champion pour maximiser vos gains" },
         ];
@@ -576,6 +576,7 @@
             { nom: "Au Complet", description: "Acheter toutes les voitures", condition: () => cars.filter(c => !c.type).every(c => c.count > 0), obtenu: false },
             { nom: "Strict Nécessaire", description: "Acheter toutes les améliorations", condition: () => upgrades.every(u => u.bought), obtenu: false },
             { nom: "Tour du Monde", description: "Acheter tous les circuits", condition: () => tracks.every(t => t.bought), obtenu: false },
+            { nom: "Tu Tu Tu Du", description: "Simply Lovely", condition: () => getAmeliorations().includes("Max Verstappen"), obtenu: false },
             { nom: "Sir Lewis Hamilton", description: "Recruter le meilleur pilote", condition: () => getAmeliorations().includes("Lewis hamilton"), obtenu: false },
 
 
@@ -949,3 +950,4 @@
     </script>
 </body>
 </html>
+
