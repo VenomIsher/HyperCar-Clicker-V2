@@ -241,13 +241,55 @@
         }
 
         .succes-obtenu {
-            background-color: #4caf50; /* vert */
+            background-color: #333; 
+            border: solid, 2px, green ;
             color: white;
         }
 
         .succes-non-obtenu {
-            background-color: #f44336; /* rouge */
+            background-color: #333;
+            border: solid, 2px, red;
             color: white;
+        }
+
+        .succes-popup {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #4caf50;
+            color: white;
+            padding: 18px 32px;
+            border-radius: 12px;
+            font-size: 1.3em;
+            font-weight: bold;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+            z-index: 9999;
+            opacity: 0;
+            animation: succesFadeInOut 2.2s ease;
+            pointer-events: none;
+        }
+
+        @keyframes succesFadeInOut {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.8);
+            }
+
+            10% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+
+            90% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.8);
+            }
         }
 
     </style>
@@ -416,6 +458,9 @@
             ...carsMythique
         ];
 
+        function getGarage() {
+            return cars.filter(car => car.count > 0 && !car.type);
+        }
 
         const upgrades = [
             { name: "Turbo niv.1 👆", cost: 100, effect: () => { baseClickValue *= 1.2; }, desc: "Un petit coup de boost au démarrage" },
@@ -450,6 +495,10 @@
             { name: "Ayrton Senna 🏎️", cost: 27000000, effect: () => { baseClickValue *= 1.6; }, desc: "Une légende du volant pour vous guider" },
             { name: "Lewis Hamilton 🏎️", cost: 4400000000, effect: () => { totalCPS += 2; }, desc: "Un champion pour maximiser vos gains" },
         ];
+
+        function getAmeliorations() {
+            return upgrades.filter(u => u.bought);
+        }
 
         const tracks = [
             // Circuits faciles / vitesse pure
@@ -490,39 +539,43 @@
 
         ];
 
+        function getCircuits() {
+            return tracks.filter(t => t.bought);
+        }
+
         const succes = [
-            { nom: "Premier Achat", description: "Acheter votre première voiture", condition: () => garage.length >= 1, achived: false },
-            { nom: "Collectionneur", description: "Acheter 5 voitures différentes", condition: () => garage.length >= 5, achived: false },
-            { nom: "Élite", description: "Acheter une voiture épique", condition: () => garage.some(v => v.rang === "épique"), achived: false },
-            { nom: "Légende Vivante", description: "Acheter une voiture légendaire", condition: () => garage.some(v => v.rang === "légendaire"), achived: false },
-            { nom: "Mythe Automobile", description: "Acheter une voiture mythique", condition: () => garage.some(v => v.rang === "mythique"), achived: false },
-            { nom: "Garage Universel", description: "Posséder une voiture de chaque catégorie", condition: () => ["commun", "rare", "épique", "légendaire", "mythique"].every(rang => garage.some(v => v.rang === rang)), achived: false },
-            { nom: "Tuning Débutant", description: "Acheter votre première amélioration", condition: () => ameliorations.length >= 1, achived: false },
-            { nom: "Premier Tour", description: "Acheter votre premier circuit", condition: () => circuits.length >= 1, achived: false },
-            { nom: "Enfer Vert", description: "Acheter le circuit du Nurbürgring", condition: () => circuits.includes("Nurburgring"), achived: false },
-            { nom: "Les 24 Heures", description: "Acheter le circuit du Mans", condition: () => circuits.includes("Le Mans"), achived: false },
+            { nom: "Premier Clic", description: "Clicker 1 fois.", condition: () => totalClicks >= 1, obtenu: false },
+            { nom: "Premier Achat", description: "Acheter votre première voiture", condition: () => getGarage().length >= 1, obtenu: false },
+            { nom: "Petit Revenus", description: "Gagner 10 crédits par seconde", condition: () => creditsPerSecond >= 10, obtenu: false },
+            { nom: "Amélioration", description: "Acheter votre première amélioration", condition: () => getAmeliorations().length >= 1, obtenu: false },
+            { nom: "Doigt Rapide", description: "Clicker 100 fois", condition: () => totalClicks >= 100, obtenu: false },
+            { nom: "Collectionneur", description: "Acheter 5 voitures différentes", condition: () => getGarage().length >= 5, obtenu: false },
+            { nom: "Investisseur", description: "Gagner 100 crédits par seconde", condition: () => creditsPerSecond >= 100, obtenu: false },
+            { nom: "Tuning", description: "Acheter 10 améliorations", condition: () => getAmeliorations().length >= 10, obtenu: false },
+            { nom: "Accro du Clic", description: "Clicker 1 000 fois", condition: () => totalClicks >= 1000, obtenu: false },
+            { nom: "Machine à Clics", description: "Clicker 1M fois", condition: () => totalClicks >= 1_000_000, obtenu: false },
+            { nom: "Doigts infatigables", description: "Clicker 1B fois", condition: () => totalClicks >= 1_000_000_000, obtenu: false },
+            { nom: "Magnat", description: "Gagner 1 000 crédits par seconde", condition: () => creditsPerSecond >= 1000, obtenu: false },
+            { nom: "Tycoon", description: "Gagner 10 000 crédits par seconde", condition: () => creditsPerSecond >= 10000, obtenu: false },
+            { nom: "Millionnaire", description: "Gagner 1M crédits par seconde", condition: () => creditsPerSecond >= 1_000_000, obtenu: false },
+            { nom: "Milliardaire", description: "Gagner 1B crédits par seconde", condition: () => creditsPerSecond >= 1_000_000_000, obtenu: false },
+            { nom: "Premier Tour", description: "Acheter votre premier circuit", condition: () => getCircuits().length >= 1, obtenu: false },
+            { nom: "Élite", description: "Acheter une voiture épique", condition: () => getGarage().some(v => v.rang === "épique"), obtenu: false },
+            { nom: "Légende Vivante", description: "Acheter une voiture légendaire", condition: () => getGarage().some(v => v.rang === "légendaire"), obtenu: false },
+            { nom: "Mythe Automobile", description: "Acheter une voiture mythique", condition: () => getGarage().some(v => v.rang === "mythique"), obtenu: false },
+            { nom: "Garage Universel", description: "Posséder une voiture de chaque catégorie", condition: () => ["commun", "rare", "épique", "légendaire", "mythique"].every(rang => getGarage().some(v => v.rang === rang)), obtenu: false },
+            { nom: "L'Enfer Vert", description: "Acheter le circuit du Nurbürgring", condition: () => getCircuits().includes("Nurbürgring Nordschleife"), obtenu: false },
+            { nom: "Les 24 Heures", description: "Acheter le circuit du Mans", condition: () => getCircuits().includes("Le Mans"), obtenu: false },
+            { nom: "Collection Commune", description: "Obtenir toutes les voitures communes", condition: () => toutesLesCommunes.every(nom => getGarage().some(v => v.nom === nom)), obtenu: false },
+            { nom: "Collection Rare", description: "Obtenir toutes les voitures rares", condition: () => toutesLesRares.every(nom => getGarage().some(v => v.nom === nom)), obtenu: false },
+            { nom: "Collection Épique", description: "Obtenir toutes les voitures épiques", condition: () => toutesLesÉpiques.every(nom => getGarage().some(v => v.nom === nom)), obtenu: false },
+            { nom: "Collection Légendaire", description: "Obtenir toutes les voitures légendaires", condition: () => toutesLesLégendaires.every(nom => getGarage().some(v => v.nom === nom)), obtenu: false },
+            { nom: "Collection Mythique", description: "Obtenir toutes les voitures mythiques", condition: () => toutesLesMythiques.every(nom => getGarage().some(v => v.nom === nom)), obtenu: false },
+            { nom: "Une 3 places", description: "Obtenir la McLaren F1", condition: () => getGarage().some(v => v.nom === "McLaren F1"), obtenu: false },
+            { nom: "Moteur Wankel", description: "Obtenir la Mazda 787B", condition: () => getGarage().some(v => v.nom === "Mazda 787B"), obtenu: false },
+            { nom: "Strict Nécessaire", description: "Acheter toutes les améliorations", condition: () => upgrades.every(u => u.bought), obtenu: false },
+            { nom: "Au Complet", description: "Acheter toutes les voitures", condition: () => cars.filter(c => !c.type).every(c => c.count > 0), obtenu: false }
 
-            { nom: "Premier Clic", description: "Clicker 1 fois.", condition: () => totalClicks >= 1, achived: false },
-            { nom: "Doigt Rapide", description: "Clicker 100 fois", condition: () => totalClicks >= 100, achived: false },
-            { nom: "Accro du Clic", description: "Clicker 1 000 fois", condition: () => totalClicks >= 1000, achived: false },
-            { nom: "Machine à Clics", description: "Clicker 1M fois", condition: () => totalClicks >= 1_000_000, achived: false },
-            { nom: "Doigts infatigables", description: "Clicker 1B fois", condition: () => totalClicks >= 1_000_000_000, achived: false },
-
-            { nom: "Petit Revenus", description: "Gagner 10 crédits par seconde", condition: () => creditsPerSecond >= 10, achived: false },
-            { nom: "Investisseur", description: "Gagner 100 crédits par seconde", condition: () => creditsPerSecond >= 100, achived: false },
-            { nom: "Magnat", description: "Gagner 1 000 crédits par seconde", condition: () => creditsPerSecond >= 1000, achived: false },
-            { nom: "Tycoon", description: "Gagner 10 000 crédits par seconde", condition: () => creditsPerSecond >= 10000, achived: false },
-            { nom: "Millionnaire", description: "Gagner 1M crédits par seconde", condition: () => creditsPerSecond >= 1_000_000, achived: false },
-            { nom: "Milliardaire", description: "Gagner 1B crédits par seconde", condition: () => creditsPerSecond >= 1_000_000_000, achived: false },
-
-            { nom: "Une 3 places", description: "Obtenir la McLaren F1", condition: () => garage.some(v => v.nom === "McLaren F1"), achived: false },
-            { nom: "Collection Commune", description: "Obtenir toutes les voitures communes", condition: () => toutesLesCommunes.every(nom => garage.some(v => v.nom === nom)), achived: false },
-            { nom: "Collection Rare", description: "Obtenir toutes les voitures rares", condition: () => toutesLesRares.every(nom => garage.some(v => v.nom === nom)), achived: false },
-            { nom: "Collection Épique", description: "Obtenir toutes les voitures épiques", condition: () => toutesLesÉpiques.every(nom => garage.some(v => v.nom === nom)), achived: false },
-            { nom: "Collection Légendaire", description: "Obtenir toutes les voitures légendaires", condition: () => toutesLesLégendaires.every(nom => garage.some(v => v.nom === nom)), achived: false },
-            { nom: "Collection Mythique", description: "Obtenir toutes les voitures mythiques", condition: () => toutesLesMythiques.every(nom => garage.some(v => v.nom === nom)), achived: false },
-
-            { nom: "Moteur rotatif", description: "Obtenir la Mazda 787B", condition: () => garage.some(v => v.nom === "Mazda 787B"), achived: false },
         ];
 
         function resetGame() {
@@ -550,13 +603,14 @@
                 // Réinitialiser les circuits
                 tracks.forEach(t => t.bought = false);
 
+                // Réinitialiser les succès
+                succes.forEach(s => s.obtenu = false);
+                showStats('success'); // Met à jour l'affichage des succès
+
                 // Réinitialiser l'affichage
                 updateCreditsDisplay();
                 updateStatsDisplay();
                 renderShop();
-
-                // Supprimer les succès obtenus
-                succes.forEach(s => s.achived = false);
 
                 alert("🔄 Partie réinitialisée !");
             }
@@ -852,17 +906,16 @@
             }
 
             else if (type === "success") {
-
                 succesDiv.innerHTML = "";
                 succes.forEach(s => {
+                    const classe = s.obtenu ? "succes-obtenu" : "succes-non-obtenu";
                     succesDiv.innerHTML += `
-                        <div class="card" style="margin:5px; padding:10px;">
-                            <strong>${s.nom}</strong><br>
-                            <span>${s.description}</span>
-                        </div>
-                    `;
+            <div class="card ${classe}" style="margin:5px; padding:10px;">
+                <strong>${s.nom}</strong><br>
+                <span>${s.description}</span>
+            </div>
+        `;
                 });
-
                 succesDiv.style.display = "block";
             }
         }
@@ -871,13 +924,19 @@
             succes.forEach(s => {
                 if (!s.obtenu && s.condition()) {
                     s.obtenu = true;
-                    alert("🏆 Succès débloqué : " + s.nom);  // tu peux remplacer par une notif stylée
-                    afficherSucces(); // on met à jour l'affichage
+                    showSuccesPopup(s.nom);  // tu peux remplacer par une notif stylée
+                    showStats('success'); // on met à jour l'affichage
                 }
             });
         }
 
-
+        function showSuccesPopup(nom) {
+            const popup = document.createElement("div");
+            popup.className = "succes-popup";
+            popup.innerText = `🏆 Succès débloqué : ${nom}`;
+            document.body.appendChild(popup);
+            setTimeout(() => popup.remove(), 2200);
+        }
 
         loadGame();
         renderShop();
@@ -887,5 +946,3 @@
     </script>
 </body>
 </html>
-
-
