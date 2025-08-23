@@ -573,8 +573,11 @@
             { nom: "Collection Mythique", description: "Obtenir toutes les voitures mythiques", condition: () => toutesLesMythiques.every(nom => getGarage().some(v => v.nom === nom)), obtenu: false },
             { nom: "Une 3 places", description: "Obtenir la McLaren F1", condition: () => getGarage().some(v => v.nom === "McLaren F1"), obtenu: false },
             { nom: "Moteur Wankel", description: "Obtenir la Mazda 787B", condition: () => getGarage().some(v => v.nom === "Mazda 787B"), obtenu: false },
+            { nom: "Au Complet", description: "Acheter toutes les voitures", condition: () => cars.filter(c => !c.type).every(c => c.count > 0), obtenu: false },
             { nom: "Strict Nécessaire", description: "Acheter toutes les améliorations", condition: () => upgrades.every(u => u.bought), obtenu: false },
-            { nom: "Au Complet", description: "Acheter toutes les voitures", condition: () => cars.filter(c => !c.type).every(c => c.count > 0), obtenu: false }
+            { nom: "Tour du Monde", description: "Acheter tous les circuits", condition: () => tracks.every(t => t.bought), obtenu: false },
+            { nom: "Sir Lewis Hamilton", description: "Recruter le meilleur pilote", condition: () => getAmeliorations().includes("Lewis hamilton"), obtenu: false },
+
 
         ];
 
