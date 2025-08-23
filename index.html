@@ -575,7 +575,7 @@
             { nom: "Élite", description: "Acheter une voiture épique", condition: () => getGarage().some(v => v.rang === "épique"), obtenu: false },
             { nom: "Légende Vivante", description: "Acheter une voiture légendaire", condition: () => getGarage().some(v => v.rang === "légendaire"), obtenu: false },
             { nom: "Mythe Automobile", description: "Acheter une voiture mythique", condition: () => getGarage().some(v => v.rang === "mythique"), obtenu: false },
-            { nom: "Garage Universel", description: "Posséder une voiture de chaque catégorie", condition: () => ["commun", "rare", "épique", "légendaire", "mythique"].every(rang => getGarage().some(v => v.rang === rang)), obtenu: false },
+            { nom: "Garage Universel", description: "Posséder une voiture de chaque catégorie", condition: () => ["commune", "rare", "épique", "légendaire", "mythique"].every(rang => getGarage().some(v => v.rang === rang)), obtenu: false },
             { nom: "L'Enfer Vert", description: "Acheter le circuit du Nurbürgring", condition: () => getCircuits().includes("Nurbürgring Nordschleife"), obtenu: false },
             { nom: "Les 24 Heures", description: "Acheter le circuit du Mans", condition: () => getCircuits().includes("Le Mans"), obtenu: false },
             { nom: "Collection Commune", description: "Obtenir toutes les voitures communes", condition: () => toutesLesCommunes.every(name => getGarage().some(v => v.name === name)), obtenu: false },
@@ -985,3 +985,4 @@
     </script>
 </body>
 </html>
+
