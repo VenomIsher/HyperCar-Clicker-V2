@@ -360,6 +360,10 @@
 
             <button class="stats-btn" onclick="showStats('success')">🏆 Succès</button>
             <div id="liste-succes" style="display:none; margin-top:10px; text-align:left;"></div>
+
+            <!-- Ajoute ce bouton dans la section Stats, juste après le bouton Succès -->
+            <button class="stats-btn" onclick="showStats('upgrades')">⚙️ Améliorations acquises</button>
+            <div id="liste-upgrades" style="display:none; margin-top:10px; text-align:left;"></div>
         </div>
     </div>
 
@@ -378,74 +382,74 @@
         const carsCommunes = [
             { type: "separator", label: "🚗 Communes" },
             { name: "Porsche Cayman", baseCost: 25, cps: 1, count: 0, achete: false },
-            { name: "Audi R8", baseCost: 120, cps: 3, count: 0, achete: false },
-            { name: "Mercedes AMG GT", baseCost: 250, cps: 5, count: 0, achete: false },
-            { name: "Aston Martin Vantage", baseCost: 400, cps: 8, count: 0, achete: false },
-            { name: "Nissan 370Z", baseCost: 600, cps: 10, count: 0, achete: false },
-            { name: "Toyota Supra Mk5", baseCost: 750, cps: 12, count: 0, achete: false },
-            { name: "Ford Mustang GT", baseCost: 900, cps: 15, count: 0, achete: false },
-            { name: "Chevrolet Camaro ZL1", baseCost: 1100, cps: 18, count: 0, achete: false },
-            { name: "BMW M4", baseCost: 1300, cps: 20, count: 0, achete: false },
-            { name: "Lotus Elise", baseCost: 1500, cps: 22, count: 0, achete: false },
+            { name: "Audi R8", baseCost: 120, cps: 3, count: 0, rang: "commune", achete: false },
+            { name: "Mercedes AMG GT", baseCost: 250, cps: 5, count: 0, rang: "commune", achete: false },
+            { name: "Aston Martin Vantage", baseCost: 400, cps: 8, count: 0, rang: "commune", achete: false },
+            { name: "Nissan 370Z", baseCost: 600, cps: 10, count: 0, rang: "commune", achete: false },
+            { name: "Toyota Supra Mk5", baseCost: 750, cps: 12, count: 0, rang: "commune", achete: false },
+            { name: "Ford Mustang GT", baseCost: 900, cps: 15, count: 0, rang: "commune", achete: false },
+            { name: "Chevrolet Camaro ZL1", baseCost: 1100, cps: 18, count: 0, rang: "commune", achete: false },
+            { name: "BMW M4", baseCost: 1300, cps: 20, count: 0, rang: "commune", achete: false },
+            { name: "Lotus Elise", baseCost: 1500, cps: 22, count: 0, rang: "commune", achete: false },
         ];
 
         const carsRares = [
             { type: "separator", label: "🏎️ Rares" },
-            { name: "Ferrari F8 Tributo", baseCost: 5000, cps: 30, count: 0, achete: false },
-            { name: "Lamborghini Aventador", baseCost: 12000, cps: 50, count: 0, achete: false },
-            { name: "Porsche 911 GT3 RS", baseCost: 20000, cps: 75, count: 0, achete: false },
-            { name: "McLaren 720S", baseCost: 35000, cps: 100, count: 0, achete: false },
-            { name: "Maserati MC20", baseCost: 50000, cps: 150, count: 0, achete: false },
-            { name: "Audi RS7", baseCost: 65000, cps: 200, count: 0, achete: false },
-            { name: "Jaguar F-Type SVR", baseCost: 85000, cps: 250, count: 0, achete: false },
-            { name: "Corvette C8 Z06", baseCost: 100000, cps: 300, count: 0, achete: false },
-            { name: "Lexus LFA", baseCost: 140000, cps: 400, count: 0, achete: false },
-            { name: "Alpine A110S", baseCost: 180000, cps: 500, count: 0, achete: false },
+            { name: "Ferrari F8 Tributo", baseCost: 5000, cps: 30, count: 0, rang: "rare", achete: false },
+            { name: "Lamborghini Aventador", baseCost: 12000, cps: 50, count: 0, rang: "rare", achete: false },
+            { name: "Porsche 911 GT3 RS", baseCost: 20000, cps: 75, count: 0, rang: "rare", achete: false },
+            { name: "McLaren 720S", baseCost: 35000, cps: 100, count: 0, rang: "rare", achete: false },
+            { name: "Maserati MC20", baseCost: 50000, cps: 150, count: 0, rang: "rare", achete: false },
+            { name: "Audi RS7", baseCost: 65000, cps: 200, count: 0, rang: "rare", achete: false },
+            { name: "Jaguar F-Type SVR", baseCost: 85000, cps: 250, count: 0, rang: "rare", achete: false },
+            { name: "Corvette C8 Z06", baseCost: 100000, cps: 300, count: 0, rang: "rare", achete: false },
+            { name: "Lexus LFA", baseCost: 140000, cps: 400, count: 0, rang: "rare", achete: false },
+            { name: "Alpine A110S", baseCost: 180000, cps: 500, count: 0, rang: "rare", achete: false },
         ];
 
         const carsEpique = [
             { type: "separator", label: "🔥 Épiques" },
-            { name: "Ferrari LaFerrari", baseCost: 250000, cps: 750, count: 0, achete: false },
-            { name: "Porsche 918 Spyder", baseCost: 400000, cps: 1000, count: 0, achete: false },
-            { name: "Mercedes SLR McLaren", baseCost: 600000, cps: 1500, count: 0, achete: false },
-            { name: "Aston Martin Vulcan", baseCost: 900000, cps: 2000, count: 0, achete: false },
-            { name: "Pagani Utopia", baseCost: 1200000, cps: 3000, count: 0, achete: false },
-            { name: "Ferrari SF90 Stradale", baseCost: 1500000, cps: 4000, count: 0, achete: false },
-            { name: "Lamborghini Huracán Performante", baseCost: 2000000, cps: 5000, count: 0, achete: false },
-            { name: "Ford GT (2017)", baseCost: 2500000, cps: 6000, count: 0, achete: false },
-            { name: "Rimac Nevera", baseCost: 3200000, cps: 8000, count: 0, achete: false },
-            { name: "Lotus Evija", baseCost: 4000000, cps: 10000, count: 0, achete: false },
-            { name: "De Tomaso P72", baseCost: 4800000, cps: 12000, count: 0, achete: false },
+            { name: "Ferrari LaFerrari", baseCost: 250000, cps: 750, count: 0, rang: "épique", achete: false },
+            { name: "Porsche 918 Spyder", baseCost: 400000, cps: 1000, count: 0, rang: "épique", achete: false },
+            { name: "Mercedes SLR McLaren", baseCost: 600000, cps: 1500, count: 0, rang: "épique", achete: false },
+            { name: "Aston Martin Vulcan", baseCost: 900000, cps: 2000, count: 0, rang: "épique", achete: false },
+            { name: "Pagani Utopia", baseCost: 1200000, cps: 3000, count: 0, rang: "épique", achete: false },
+            { name: "Ferrari SF90 Stradale", baseCost: 1500000, cps: 4000, count: 0, rang: "épique", achete: false },
+            { name: "Lamborghini Huracán Performante", baseCost: 2000000, cps: 5000, count: 0, rang: "épique", achete: false },
+            { name: "Ford GT (2017)", baseCost: 2500000, cps: 6000, count: 0, rang: "épique", achete: false },
+            { name: "Rimac Nevera", baseCost: 3200000, cps: 8000, count: 0, rang: "épique", achete: false },
+            { name: "Lotus Evija", baseCost: 4000000, cps: 10000, count: 0, rang: "épique", achete: false },
+            { name: "De Tomaso P72", baseCost: 4800000, cps: 12000, count: 0, rang: "épique", achete: false },
         ];
 
         const carsLegendaire = [
             { type: "separator", label: "🏆 Légendaires" },
-            { name: "Bugatti Chiron", baseCost: 6000000, cps: 15000, count: 0, achete: false },
-            { name: "Aston Martin Valkyrie", baseCost: 8000000, cps: 20000, count: 0, achete: false },
-            { name: "McLaren P1", baseCost: 10000000, cps: 25000, count: 0, achete: false },
-            { name: "Lamborghini Veneno", baseCost: 12000000, cps: 30000, count: 0, achete: false },
-            { name: "Ferrari F40", baseCost: 16000000, cps: 40000, count: 0, achete: false },
-            { name: "Porsche 911 GT1 Straßenversion", baseCost: 20000000, cps: 50000, count: 0, achete: false },
-            { name: "Koenigsegg Agera", baseCost: 24000000, cps: 60000, count: 0, achete: false },
-            { name: "Pagani Huayra", baseCost: 30000000, cps: 75000, count: 0, achete: false },
-            { name: "Ferrari Enzo", baseCost: 40000000, cps: 100000, count: 0, achete: false },
-            { name: "Lamborghini Miura", baseCost: 48000000, cps: 120000, count: 0, achete: false },
+            { name: "Bugatti Chiron", baseCost: 6000000, cps: 15000, count: 0, rang: "légendaire", achete: false },
+            { name: "Aston Martin Valkyrie", baseCost: 8000000, cps: 20000, count: 0, rang: "légendaire", achete: false },
+            { name: "McLaren P1", baseCost: 10000000, cps: 25000, count: 0, rang: "légendaire", achete: false },
+            { name: "Lamborghini Veneno", baseCost: 12000000, cps: 30000, rang: "légendaire", count: 0, achete: false },
+            { name: "Ferrari F40", baseCost: 16000000, cps: 40000, count: 0, rang: "légendaire", achete: false },
+            { name: "Porsche 911 GT1 Straßenversion", baseCost: 20000000, cps: 50000, count: 0, rang: "légendaire", achete: false },
+            { name: "Koenigsegg Agera", baseCost: 24000000, cps: 60000, count: 0, rang: "légendaire", achete: false },
+            { name: "Pagani Huayra", baseCost: 30000000, cps: 75000, count: 0, rang: "légendaire", achete: false },
+            { name: "Ferrari Enzo", baseCost: 40000000, cps: 100000, count: 0, rang: "légendaire", achete: false },
+            { name: "Lamborghini Miura", baseCost: 48000000, cps: 120000, count: 0, rang: "légendaire", achete: false },
         ];
 
         const carsMythique = [
             { type: "separator", label: "🌌 Mythiques" },
-            { name: "Mercedes AMG ONE", baseCost: 60000000, cps: 400000, count: 0, achete: false },
-            { name: "Bugatti Tourbillon", baseCost: 80000000, cps: 500000, count: 0, achete: false },
-            { name: "McLaren F1", baseCost: 100000000, cps: 600000, count: 0, achete: false },
-            { name: "Koenigsegg Jesko", baseCost: 120000000, cps: 750000, count: 0, achete: false },
-            { name: "Koenigsegg Jesko Absolute", baseCost: 150000000, cps: 1000000, count: 0, achete: false },
-            { name: "SSC Tuatara", baseCost: 200000000, cps: 1500000, count: 0, achete: false },
-            { name: "Bugatti Veyron Super Sport", baseCost: 250000000, cps: 2000000, count: 0, achete: false },
-            { name: "Hennessey Venom F5", baseCost: 300000000, cps: 2500000, count: 0, achete: false },
-            { name: "Apollo IE", baseCost: 350000000, cps: 3000000, count: 0, achete: false },
-            { name: "Devel Sixteen", baseCost: 400000000, cps: 4000000, count: 0, achete: false },
-            { name: "Ferrari 250 GTO", baseCost: 500000000, cps: 5000000, count: 0, achete: false },
-            { name: "Mazda 787B", baseCost: 600000000, cps: 6000000, count: 0, achete: false },
+            { name: "Mercedes AMG ONE", baseCost: 60000000, cps: 400000, count: 0, rang: "mythique", achete: false },
+            { name: "Bugatti Tourbillon", baseCost: 80000000, cps: 500000, count: 0, rang: "mythique", achete: false },
+            { name: "McLaren F1", baseCost: 100000000, cps: 600000, count: 0, rang: "mythique", achete: false },
+            { name: "Koenigsegg Jesko", baseCost: 120000000, cps: 750000, count: 0, rang: "mythique", achete: false },
+            { name: "Koenigsegg Jesko Absolute", baseCost: 150000000, cps: 1000000, count: 0, rang: "mythique", achete: false },
+            { name: "SSC Tuatara", baseCost: 200000000, cps: 1500000, count: 0, rang: "mythique", achete: false },
+            { name: "Bugatti Veyron Super Sport", baseCost: 250000000, cps: 2000000, count: 0, rang: "mythique", achete: false },
+            { name: "Hennessey Venom F5", baseCost: 300000000, cps: 2500000, count: 0, rang: "mythique", achete: false },
+            { name: "Apollo IE", baseCost: 350000000, cps: 3000000, count: 0, rang: "mythique", achete: false },
+            { name: "Devel Sixteen", baseCost: 400000000, cps: 4000000, count: 0, rang: "mythique", achete: false },
+            { name: "Ferrari 250 GTO", baseCost: 500000000, cps: 5000000, count: 0, rang: "mythique", achete: false },
+            { name: "Mazda 787B", baseCost: 600000000, cps: 6000000, count: 0, rang: "mythique", achete: false },
         ];
 
         // Fusionner toutes les voitures en un seul tableau
@@ -493,6 +497,15 @@
             { name: "Max Verstappen 🏎️", cost: 3300000, effect: () => { totalCPS += 1.8; }, desc: "Un pilote rapide et précis" },
             { name: "Ayrton Senna 🏎️", cost: 27000000, effect: () => { baseClickValue *= 1.6; }, desc: "Une légende du volant pour vous guider" },
             { name: "Lewis Hamilton 🏎️", cost: 4400000000, effect: () => { totalCPS += 2; }, desc: "Un champion pour maximiser vos gains" },
+            { name: "Superchargeur ⚡", cost: 100000, effect: () => { totalCPS *= 1.7; }, desc: "Un moteur surpuissant pour booster vos gains passifs" },
+            { name: "Carrosserie Titane 🛡️", cost: 250000, effect: () => { baseClickValue *= 1.6; }, desc: "Une carrosserie ultra légère pour des clics plus rentables" },
+            { name: "Equipe d'Ingénieurs 👨‍🔧", cost: 500000, effect: () => { totalCPS *= 1.8; }, desc: "Des experts pour optimiser tous vos revenus" },
+            { name: "ECU 💻", cost: 1200000, effect: () => { baseClickValue *= 1.8; }, desc: "L'IA optimise chaque action pour des clics surpuissants" },
+            { name: "Usine automatisée 🏭", cost: 5000000, effect: () => { totalCPS *= 2; }, desc: "Production automatisée pour des revenus passifs doublés" },
+            { name: "ConceptCar 🚀", cost: 20000000, effect: () => { baseClickValue *= 2; }, desc: "Un concept révolutionnaire qui multiplie vos clics" },
+            { name: "Laboratoire secret 🧪", cost: 500000000, effect: () => { baseClickValue *= 2.5; }, desc: "Des innovations secrètes pour des clics phénoménaux" },
+            { name: "Partenariat mondial 🌍", cost: 2000000000, effect: () => { totalCPS *= 3; }, desc: "Un réseau international pour tripler vos revenus passifs" },
+
         ];
 
         function getAmeliorations() {
@@ -545,19 +558,19 @@
         const succes = [
             { nom: "Premier Clic", description: "Clicker 1 fois.", condition: () => totalClicks >= 1, obtenu: false },
             { nom: "Premier Achat", description: "Acheter votre première voiture", condition: () => getGarage().length >= 1, obtenu: false },
-            { nom: "Petit Revenus", description: "Gagner 10 crédits par seconde", condition: () => creditsPerSecond >= 10, obtenu: false },
+            { nom: "Petit Revenus", description: "Gagner 10 crédits par seconde", condition: () => totalCPS >= 10, obtenu: false },
             { nom: "Amélioration", description: "Acheter votre première amélioration", condition: () => getAmeliorations().length >= 1, obtenu: false },
-            { nom: "Doigt Rapide", description: "Clicker 100 fois", condition: () => totalClicks >= 100, obtenu: false },
+            { nom: "Doigts Rapides", description: "Clicker 100 fois", condition: () => totalClicks >= 100, obtenu: false },
             { nom: "Collectionneur", description: "Acheter 5 voitures différentes", condition: () => getGarage().length >= 5, obtenu: false },
-            { nom: "Investisseur", description: "Gagner 100 crédits par seconde", condition: () => creditsPerSecond >= 100, obtenu: false },
+            { nom: "Investisseur", description: "Gagner 100 crédits par seconde", condition: () => totalCPS >= 100, obtenu: false },
             { nom: "Tuning", description: "Acheter 10 améliorations", condition: () => getAmeliorations().length >= 10, obtenu: false },
             { nom: "Accro du Clic", description: "Clicker 1 000 fois", condition: () => totalClicks >= 1000, obtenu: false },
             { nom: "Machine à Clics", description: "Clicker 1M fois", condition: () => totalClicks >= 1_000_000, obtenu: false },
             { nom: "Doigts infatigables", description: "Clicker 1B fois", condition: () => totalClicks >= 1_000_000_000, obtenu: false },
-            { nom: "Magnat", description: "Gagner 1 000 crédits par seconde", condition: () => creditsPerSecond >= 1000, obtenu: false },
-            { nom: "Tycoon", description: "Gagner 10 000 crédits par seconde", condition: () => creditsPerSecond >= 10000, obtenu: false },
-            { nom: "Millionnaire", description: "Gagner 1M crédits par seconde", condition: () => creditsPerSecond >= 1_000_000, obtenu: false },
-            { nom: "Milliardaire", description: "Gagner 1B crédits par seconde", condition: () => creditsPerSecond >= 1_000_000_000, obtenu: false },
+            { nom: "Magnat", description: "Gagner 1 000 crédits par seconde", condition: () => totalCPS >= 1000, obtenu: false },
+            { nom: "Tycoon", description: "Gagner 10 000 crédits par seconde", condition: () => totalCPS >= 10000, obtenu: false },
+            { nom: "Millionnaire", description: "Gagner 1M crédits par seconde", condition: () => totalCPS >= 1_000_000, obtenu: false },
+            { nom: "Milliardaire", description: "Gagner 1B crédits par seconde", condition: () => totalCPS >= 1_000_000_000, obtenu: false },
             { nom: "Premier Tour", description: "Acheter votre premier circuit", condition: () => getCircuits().length >= 1, obtenu: false },
             { nom: "Élite", description: "Acheter une voiture épique", condition: () => getGarage().some(v => v.rang === "épique"), obtenu: false },
             { nom: "Légende Vivante", description: "Acheter une voiture légendaire", condition: () => getGarage().some(v => v.rang === "légendaire"), obtenu: false },
@@ -565,13 +578,13 @@
             { nom: "Garage Universel", description: "Posséder une voiture de chaque catégorie", condition: () => ["commun", "rare", "épique", "légendaire", "mythique"].every(rang => getGarage().some(v => v.rang === rang)), obtenu: false },
             { nom: "L'Enfer Vert", description: "Acheter le circuit du Nurbürgring", condition: () => getCircuits().includes("Nurbürgring Nordschleife"), obtenu: false },
             { nom: "Les 24 Heures", description: "Acheter le circuit du Mans", condition: () => getCircuits().includes("Le Mans"), obtenu: false },
-            { nom: "Collection Commune", description: "Obtenir toutes les voitures communes", condition: () => toutesLesCommunes.every(nom => getGarage().some(v => v.nom === nom)), obtenu: false },
-            { nom: "Collection Rare", description: "Obtenir toutes les voitures rares", condition: () => toutesLesRares.every(nom => getGarage().some(v => v.nom === nom)), obtenu: false },
-            { nom: "Collection Épique", description: "Obtenir toutes les voitures épiques", condition: () => toutesLesÉpiques.every(nom => getGarage().some(v => v.nom === nom)), obtenu: false },
+            { nom: "Collection Commune", description: "Obtenir toutes les voitures communes", condition: () => toutesLesCommunes.every(name => getGarage().some(v => v.name === name)), obtenu: false },
+            { nom: "Collection Rare", description: "Obtenir toutes les voitures rares", condition: () => toutesLesRares.every(name => getGarage().some(v => v.name === name)), obtenu: false },
+            { nom: "Collection Épique", description: "Obtenir toutes les voitures épiques", condition: () => toutesLesÉpiques.every(name => getGarage().some(v => v.name === name)), obtenu: false },
             { nom: "Collection Légendaire", description: "Obtenir toutes les voitures légendaires", condition: () => toutesLesLégendaires.every(nom => getGarage().some(v => v.nom === nom)), obtenu: false },
-            { nom: "Collection Mythique", description: "Obtenir toutes les voitures mythiques", condition: () => toutesLesMythiques.every(nom => getGarage().some(v => v.nom === nom)), obtenu: false },
-            { nom: "Une 3 places", description: "Obtenir la McLaren F1", condition: () => getGarage().some(v => v.nom === "McLaren F1"), obtenu: false },
-            { nom: "Moteur Wankel", description: "Obtenir la Mazda 787B", condition: () => getGarage().some(v => v.nom === "Mazda 787B"), obtenu: false },
+            { nom: "Collection Mythique", description: "Obtenir toutes les voitures mythiques", condition: () => toutesLesMythiques.every(name => getGarage().some(v => v.name === name)), obtenu: false },
+            { nom: "Une 3 places", description: "Obtenir la McLaren F1", condition: () => getGarage().some(v => v.name === "McLaren F1"), obtenu: false },
+            { nom: "Moteur Wankel", description: "Obtenir la Mazda 787B", condition: () => getGarage().some(v => v.name === "Mazda 787B"), obtenu: false },
             { nom: "Au Complet", description: "Acheter toutes les voitures", condition: () => cars.filter(c => !c.type).every(c => c.count > 0), obtenu: false },
             { nom: "Strict Nécessaire", description: "Acheter toutes les améliorations", condition: () => upgrades.every(u => u.bought), obtenu: false },
             { nom: "Tour du Monde", description: "Acheter tous les circuits", condition: () => tracks.every(t => t.bought), obtenu: false },
@@ -636,6 +649,7 @@
                 tracks: tracks.map(trk => ({ bought: !!trk.bought })),
                 lastSave: Date.now(),
                 totalPlayTime: (totalPlayTime || 0) + elapsedThisSession,
+                succes: succes.map(s => ({ obtenu: !!s.obtenu })),
 
             };
             localStorage.setItem("hypercarSave", JSON.stringify(saveData));
@@ -672,6 +686,8 @@
 
             if (data.upgrades) data.upgrades.forEach((u, i) => { if (upgrades[i]) upgrades[i].bought = !!u.bought; });
             if (data.tracks) data.tracks.forEach((t, i) => { if (tracks[i]) tracks[i].bought = !!t.bought; });
+
+            if (data.succes) data.succes.forEach((s, i) => { if (succes[i]) succes[i].obtenu = !!s.obtenu; });
 
             updateCreditsDisplay();
             renderShop();
@@ -862,21 +878,26 @@
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
+        // Modifie la fonction showStats pour gérer le nouveau type "upgrades"
         function showStats(type) {
             const garageDiv = document.getElementById("garage-liste");
             const succesDiv = document.getElementById("liste-succes");
+            const upgradesDiv = document.getElementById("liste-upgrades");
 
             // Toggle : si le menu demandé est déjà visible, on le cache
             if ((type === "garage" && garageDiv.style.display === "block") ||
-                (type === "success" && succesDiv.style.display === "block")) {
+                (type === "success" && succesDiv.style.display === "block") ||
+                (type === "upgrades" && upgradesDiv.style.display === "block")) {
                 garageDiv.style.display = "none";
                 succesDiv.style.display = "none";
+                upgradesDiv.style.display = "none";
                 return;
             }
 
             // On cache tout d'abord
             garageDiv.style.display = "none";
             succesDiv.style.display = "none";
+            upgradesDiv.style.display = "none";
 
             if (type === "garage") {
                 garageDiv.innerHTML = "";
@@ -885,6 +906,7 @@
                 if (voituresAchetees.length === 0) {
                     garageDiv.innerHTML = "<em>Votre garage est vide</em>";
                 } else {
+                    // Compte le total par catégorie (avec doublons)
                     const classes = {};
                     voituresAchetees.forEach(car => {
                         let classe = "Inconnue";
@@ -894,18 +916,16 @@
                                 break;
                             }
                         }
-                        if (!classes[classe]) classes[classe] = new Set();
-                        classes[classe].add(car.name);
+                        if (!classes[classe]) classes[classe] = 0;
+                        classes[classe] += car.count;
                     });
 
                     for (const classe in classes) {
-                        garageDiv.innerHTML += `<strong>${classe}</strong> : ${classes[classe].size} voiture(s)<br>`;
+                        garageDiv.innerHTML += `<strong>${classe}</strong> : ${classes[classe]} voiture(s)<br>`;
                     }
                 }
-
                 garageDiv.style.display = "block";
             }
-
             else if (type === "success") {
                 succesDiv.innerHTML = "";
                 succes.forEach(s => {
@@ -918,6 +938,24 @@
             `;
                 });
                 succesDiv.style.display = "block";
+            }
+            else if (type === "upgrades") {
+                upgradesDiv.innerHTML = "";
+                const upgradesAchetees = upgrades.filter(u => u.bought);
+
+                if (upgradesAchetees.length === 0) {
+                    upgradesDiv.innerHTML = "<em>Aucune amélioration acquise</em>";
+                } else {
+                    upgradesAchetees.forEach(upg => {
+                        upgradesDiv.innerHTML += `
+                    <div class="card succes-obtenu" style="margin:5px; padding:10px;">
+                        <strong>${upg.name}</strong><br>
+                        <span>${upg.desc}</span>
+                    </div>
+                `;
+                    });
+                }
+                upgradesDiv.style.display = "block";
             }
         }
 
