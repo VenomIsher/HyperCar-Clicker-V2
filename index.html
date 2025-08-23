@@ -215,10 +215,10 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
-        .settings-btn:hover {
-            background: #444;
-            transform: scale(1.05);
-        }
+            .settings-btn:hover {
+                background: #444;
+                transform: scale(1.05);
+            }
 
         .stats-btn {
             display: block;
@@ -235,20 +235,20 @@
             transition: all 0.2s ease;
         }
 
-        .stats-btn:hover {
-            background: #444;
-            transform: scale(1.05);
-        }
+            .stats-btn:hover {
+                background: #444;
+                transform: scale(1.05);
+            }
 
         .succes-obtenu {
-            background-color: #333; 
-            border: solid, 2px, green ;
+            background-color: #333;
+            border: 2px solid green;
             color: white;
         }
 
         .succes-non-obtenu {
             background-color: #333;
-            border: solid, 2px, red;
+            border: 2px solid red;
             color: white;
         }
 
@@ -291,7 +291,6 @@
                 transform: translateX(-50%) scale(0.8);
             }
         }
-
     </style>
 </head>
 <body>
@@ -578,8 +577,6 @@
             { nom: "Tour du Monde", description: "Acheter tous les circuits", condition: () => tracks.every(t => t.bought), obtenu: false },
             { nom: "Tu Tu Tu Du", description: "Simply Lovely", condition: () => getAmeliorations().includes("Max Verstappen"), obtenu: false },
             { nom: "Sir Lewis Hamilton", description: "Recruter le meilleur pilote", condition: () => getAmeliorations().includes("Lewis hamilton"), obtenu: false },
-
-
         ];
 
         function resetGame() {
@@ -647,17 +644,17 @@
 
 
         function loadGame() {
-    const saved = localStorage.getItem("hypercarSave");
-    if (!saved) return;
+            const saved = localStorage.getItem("hypercarSave");
+            if (!saved) return;
 
-    const data = JSON.parse(saved);
+            const data = JSON.parse(saved);
 
-    // Bonus hors-ligne
-    const offlineTime = Math.floor((Date.now() - (data.lastSave || Date.now())) / 1000);
-    const offlineCredits = (data.totalCPS || 0) * offlineTime;
-    if (offlineCredits > 0) {
-        alert(`Vous avez gagné ${formatNumber(offlineCredits)} crédits hors ligne !`);
-    }
+            // Bonus hors-ligne
+            const offlineTime = Math.floor((Date.now() - (data.lastSave || Date.now())) / 1000);
+            const offlineCredits = (data.totalCPS || 0) * offlineTime;
+            if (offlineCredits > 0) {
+                alert(`Vous avez gagné ${formatNumber(offlineCredits)} crédits hors ligne !`);
+            }
 
             credits = (data.credits || 0) + offlineCredits;
             totalCPS = data.totalCPS || 0;
@@ -666,20 +663,20 @@
             totalClicks = data.totalClicks || 0;
             lastSessionStart = Date.now();
 
-    // 🔥 Restaurer chaque tableau séparément
-    if (data.carsCommunes) data.carsCommunes.forEach((c, i) => { if (carsCommunes[i]) carsCommunes[i].count = c.count || 0; });
-    if (data.carsRares) data.carsRares.forEach((c, i) => { if (carsRares[i]) carsRares[i].count = c.count || 0; });
-    if (data.carsEpique) data.carsEpique.forEach((c, i) => { if (carsEpique[i]) carsEpique[i].count = c.count || 0; });
-    if (data.carsLegendaire) data.carsLegendaire.forEach((c, i) => { if (carsLegendaire[i]) carsLegendaire[i].count = c.count || 0; });
-    if (data.carsMythique) data.carsMythique.forEach((c, i) => { if (carsMythique[i]) carsMythique[i].count = c.count || 0; });
+            // 🔥 Restaurer chaque tableau séparément
+            if (data.carsCommunes) data.carsCommunes.forEach((c, i) => { if (carsCommunes[i]) carsCommunes[i].count = c.count || 0; });
+            if (data.carsRares) data.carsRares.forEach((c, i) => { if (carsRares[i]) carsRares[i].count = c.count || 0; });
+            if (data.carsEpique) data.carsEpique.forEach((c, i) => { if (carsEpique[i]) carsEpique[i].count = c.count || 0; });
+            if (data.carsLegendaire) data.carsLegendaire.forEach((c, i) => { if (carsLegendaire[i]) carsLegendaire[i].count = c.count || 0; });
+            if (data.carsMythique) data.carsMythique.forEach((c, i) => { if (carsMythique[i]) carsMythique[i].count = c.count || 0; });
 
-    if (data.upgrades) data.upgrades.forEach((u, i) => { if (upgrades[i]) upgrades[i].bought = !!u.bought; });
-    if (data.tracks) data.tracks.forEach((t, i) => { if (tracks[i]) tracks[i].bought = !!t.bought; });
+            if (data.upgrades) data.upgrades.forEach((u, i) => { if (upgrades[i]) upgrades[i].bought = !!u.bought; });
+            if (data.tracks) data.tracks.forEach((t, i) => { if (tracks[i]) tracks[i].bought = !!t.bought; });
 
             updateCreditsDisplay();
             renderShop();
             updateStatsDisplay();
-}
+        }
 
         function formatNumber(num) {
             num = Math.floor(num);
@@ -710,13 +707,13 @@
                     const card = document.createElement("div");
                     card.className = "card";
                     card.innerHTML = `
-                                        <p>
-                                            ${car.name}<br>
-                                            💰 ${formatNumber(cost)}<br>
-                                            🚗 ${car.count}<br>
-                                            ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
-                                            ⚡ CPS total : ${formatNumber(car.count * car.cps)}
-                                        </p>
+                                            <p>
+                                                ${car.name}<br>
+                                                💰 ${formatNumber(cost)}<br>
+                                                🚗 ${car.count}<br>
+                                                ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
+                                                ⚡ CPS total : ${formatNumber(car.count * car.cps)}
+                                            </p>
 `;
                     card.onclick = () => {
                         if (credits >= cost) {
@@ -820,7 +817,7 @@
             verifierSucces();
         }
 
-         /*Fonction pour mettre à jour les stats affichées*/
+        /*Fonction pour mettre à jour les stats affichées*/
         function updateStatsDisplay() {
             document.getElementById("total-clicks").innerText = totalClicks;
             document.getElementById("total-cps").innerText = formatNumber(totalCPS);
@@ -914,11 +911,11 @@
                 succes.forEach(s => {
                     const classe = s.obtenu ? "succes-obtenu" : "succes-non-obtenu";
                     succesDiv.innerHTML += `
-            <div class="card ${classe}" style="margin:5px; padding:10px;">
-                <strong>${s.nom}</strong><br>
-                <span>${s.description}</span>
-            </div>
-        `;
+                <div class="card ${classe}" style="margin:5px; padding:10px;">
+                    <strong>${s.nom}</strong><br>
+                    <span>${s.description}</span>
+                </div>
+            `;
                 });
                 succesDiv.style.display = "block";
             }
@@ -950,4 +947,3 @@
     </script>
 </body>
 </html>
-
