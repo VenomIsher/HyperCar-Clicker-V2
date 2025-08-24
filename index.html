@@ -558,7 +558,7 @@
             { nom: "Premier Clic", description: "Clicker 1 fois.", condition: () => totalClicks >= 1, obtenu: false },
             { nom: "Premier Achat", description: "Acheter votre première voiture", condition: () => getGarage().length >= 1, obtenu: false },
             { nom: "Petit Revenus", description: "Gagner 10 crédits par seconde", condition: () => totalCPS >= 10, obtenu: false },
-            { nom: "Petit Budget", description: "Avoir produit 100 crédits", condition: () => Credits >= 100, obtenu: false },
+            { nom: "Petit Budget", description: "Avoir produit 100 crédits", condition: () => credits >= 100, obtenu: false },
             { nom: "Amélioration", description: "Acheter votre première amélioration", condition: () => getAmeliorations().length >= 1, obtenu: false },
             { nom: "Doigts Rapides", description: "Clicker 100 fois", condition: () => totalClicks >= 100, obtenu: false },
             { nom: "Collectionneur", description: "Acheter 5 voitures différentes", condition: () => getGarage().length >= 5, obtenu: false },
@@ -985,6 +985,7 @@
     </script>
 </body>
 </html>
+
 
 
 
