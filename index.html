@@ -558,18 +558,21 @@
             { nom: "Premier Clic", description: "Clicker 1 fois.", condition: () => totalClicks >= 1, obtenu: false },
             { nom: "Premier Achat", description: "Acheter votre première voiture", condition: () => getGarage().length >= 1, obtenu: false },
             { nom: "Petit Revenus", description: "Gagner 10 crédits par seconde", condition: () => totalCPS >= 10, obtenu: false },
-            { nom: "Petit Budget", description: "Avoir produit 100 crédits", condition: () => credits >= 100, obtenu: false },
+            { nom: "Début Modeste", description: "Avoir 100 crédits en banque", condition: () => credits >= 100, obtenu: false },
             { nom: "Amélioration", description: "Acheter votre première amélioration", condition: () => getAmeliorations().length >= 1, obtenu: false },
             { nom: "Doigts Rapides", description: "Clicker 100 fois", condition: () => totalClicks >= 100, obtenu: false },
             { nom: "Collectionneur", description: "Acheter 5 voitures différentes", condition: () => getGarage().length >= 5, obtenu: false },
             { nom: "Investisseur", description: "Gagner 100 crédits par seconde", condition: () => totalCPS >= 100, obtenu: false },
+            { nom: "Petit Budget", description: "Avoir 1 000 crédits en banque", condition: () => credits >= 1000, obtenu: false },
             { nom: "Tuning", description: "Acheter 10 améliorations", condition: () => getAmeliorations().length >= 10, obtenu: false },
             { nom: "Accro du Clic", description: "Clicker 1 000 fois", condition: () => totalClicks >= 1000, obtenu: false },
             { nom: "Machine à Clics", description: "Clicker 1M fois", condition: () => totalClicks >= 1_000_000, obtenu: false },
+            { nom: "Fortune", description: "Avoir 1 000 000 de crédits en banque", condition: () => credits >= 1000000, obtenu: false },
             { nom: "Doigts infatigables", description: "Clicker 1B fois", condition: () => totalClicks >= 1_000_000_000, obtenu: false },
             { nom: "Magnat", description: "Gagner 1 000 crédits par seconde", condition: () => totalCPS >= 1000, obtenu: false },
             { nom: "Tycoon", description: "Gagner 10 000 crédits par seconde", condition: () => totalCPS >= 10000, obtenu: false },
             { nom: "Millionnaire", description: "Gagner 1M crédits par seconde", condition: () => totalCPS >= 1_000_000, obtenu: false },
+            { nom: "Fortune", description: "Avoir 1 000 000 000 de crédits en banque", condition: () => credits >= 1000000, obtenu: false },
             { nom: "Milliardaire", description: "Gagner 1B crédits par seconde", condition: () => totalCPS >= 1_000_000_000, obtenu: false },
             { nom: "Premier Tour", description: "Acheter votre premier circuit", condition: () => getCircuits().length >= 1, obtenu: false },
             { nom: "Élite", description: "Acheter une voiture épique", condition: () => getGarage().some(v => v.rang === "épique"), obtenu: false },
@@ -985,6 +988,7 @@
     </script>
 </body>
 </html>
+
 
 
 
