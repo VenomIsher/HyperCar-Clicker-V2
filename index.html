@@ -492,20 +492,19 @@
             { name: "Plaquette De Freins Course ⚙️", cost: 50000, effect: () => { baseClickValue *= 1.4; }, desc: "Un bon freinage pour une bonne accélération" },
             { name: "Chassi Fibre De Carbon 🚗", cost: 55000, effect: () => { totalCPS *= 1.55; }, desc: "Un châssis ultra léger pour plus de vitesse" },
             { name: "Moteur hybride ⚡", cost: 60000, effect: () => { baseClickValue *= 1.45; }, desc: "Puissance hybride pour une course efficace" },
+            { name: "Superchargeur ⚡", cost: 100000, effect: () => { totalCPS *= 1.7; }, desc: "Un moteur surpuissant pour booster vos gains passifs" },
             { name: "Pneus Soft 🛞", cost: 100000, effect: () => { totalCPS *= 1.6; }, desc: "Pneus ultra adhérents pour des virages serrés" },
             { name: "Sponsor 💰", cost: 200000, effect: () => { baseClickValue *= 1.5; }, desc: "Soutien financier pour progresser" },
-            { name: "Max Verstappen 🏎️", cost: 3300000, effect: () => { totalCPS += 1.8; }, desc: "Un pilote rapide et précis" },
-            { name: "Ayrton Senna 🏎️", cost: 27000000, effect: () => { baseClickValue *= 1.6; }, desc: "Une légende du volant pour vous guider" },
-            { name: "Lewis Hamilton 🏎️", cost: 4400000000, effect: () => { totalCPS += 2; }, desc: "Un champion pour maximiser vos gains" },
-            { name: "Superchargeur ⚡", cost: 100000, effect: () => { totalCPS *= 1.7; }, desc: "Un moteur surpuissant pour booster vos gains passifs" },
             { name: "Carrosserie Titane 🛡️", cost: 250000, effect: () => { baseClickValue *= 1.6; }, desc: "Une carrosserie ultra légère pour des clics plus rentables" },
             { name: "Equipe d'Ingénieurs 👨‍🔧", cost: 500000, effect: () => { totalCPS *= 1.8; }, desc: "Des experts pour optimiser tous vos revenus" },
             { name: "ECU 💻", cost: 1200000, effect: () => { baseClickValue *= 1.8; }, desc: "L'IA optimise chaque action pour des clics surpuissants" },
+            { name: "Max Verstappen 🏎️", cost: 3300000, effect: () => { totalCPS += 1.8; }, desc: "Un pilote rapide et précis" },
             { name: "Usine automatisée 🏭", cost: 5000000, effect: () => { totalCPS *= 2; }, desc: "Production automatisée pour des revenus passifs doublés" },
             { name: "ConceptCar 🚀", cost: 20000000, effect: () => { baseClickValue *= 2; }, desc: "Un concept révolutionnaire qui multiplie vos clics" },
-            { name: "Laboratoire secret 🧪", cost: 500000000, effect: () => { baseClickValue *= 2.5; }, desc: "Des innovations secrètes pour des clics phénoménaux" },
+            { name: "Ayrton Senna 🏎️", cost: 27000000, effect: () => { baseClickValue *= 1.6; }, desc: "Une légende du volant pour vous guider" },
+            { name: "Recherches Avancées 🧪", cost: 500000000, effect: () => { baseClickValue *= 2.5; }, desc: "Des innovations pour des clics phénoménaux" },
             { name: "Partenariat mondial 🌍", cost: 2000000000, effect: () => { totalCPS *= 3; }, desc: "Un réseau international pour tripler vos revenus passifs" },
-
+            { name: "Lewis Hamilton 🏎️", cost: 4400000000, effect: () => { totalCPS *= 2; }, desc: "Un champion pour maximiser vos gains" },
         ];
 
         function getAmeliorations() {
@@ -985,5 +984,6 @@
     </script>
 </body>
 </html>
+
 
 
