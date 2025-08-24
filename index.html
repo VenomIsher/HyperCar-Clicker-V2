@@ -497,7 +497,7 @@
             { name: "Sponsor 💰", cost: 200000, effect: () => { baseClickValue *= 1.5; }, desc: "Soutien financier pour progresser" },
             { name: "Carrosserie Titane 🛡️", cost: 250000, effect: () => { baseClickValue *= 1.6; }, desc: "Une carrosserie ultra légère pour des clics plus rentables" },
             { name: "Equipe d'Ingénieurs 👨‍🔧", cost: 500000, effect: () => { totalCPS *= 1.8; }, desc: "Des experts pour optimiser tous vos revenus" },
-            { name: "ECU 💻", cost: 1200000, effect: () => { baseClickValue *= 1.8; }, desc: "L'IA optimise chaque action pour des clics surpuissants" },
+            { name: "ECU 💻", cost: 1200000, effect: () => { baseClickValue *= 1.8; }, desc: "Informatique optimisé pour chaque action pour des clics surpuissants" },
             { name: "Max Verstappen 🏎️", cost: 3300000, effect: () => { totalCPS += 1.8; }, desc: "Un pilote rapide et précis" },
             { name: "Usine automatisée 🏭", cost: 5000000, effect: () => { totalCPS *= 2; }, desc: "Production automatisée pour des revenus passifs doublés" },
             { name: "ConceptCar 🚀", cost: 20000000, effect: () => { baseClickValue *= 2; }, desc: "Un concept révolutionnaire qui multiplie vos clics" },
@@ -587,8 +587,8 @@
             { nom: "Au Complet", description: "Acheter toutes les voitures", condition: () => cars.filter(c => !c.type).every(c => c.count > 0), obtenu: false },
             { nom: "Strict Nécessaire", description: "Acheter toutes les améliorations", condition: () => upgrades.every(u => u.bought), obtenu: false },
             { nom: "Tour du Monde", description: "Acheter tous les circuits", condition: () => tracks.every(t => t.bought), obtenu: false },
-            { nom: "Tu Tu Tu Du", description: "Simply Lovely", condition: () => getAmeliorations().includes("Max Verstappen"), obtenu: false },
-            { nom: "Sir Lewis Hamilton", description: "Recruter le meilleur pilote", condition: () => getAmeliorations().includes("Lewis hamilton"), obtenu: false },
+            { nom: "Tu Tu Tu Du", description: "Simply Lovely", condition: () => getAmeliorations().includes("Max Verstappen 🏎️"), obtenu: false },
+            { nom: "Sir Lewis Hamilton", description: "Recruter le meilleur pilote", condition: () => getAmeliorations().includes("Lewis hamilton 🏎️"), obtenu: false },
         ];
 
         function resetGame() {
@@ -984,6 +984,7 @@
     </script>
 </body>
 </html>
+
 
 
 
