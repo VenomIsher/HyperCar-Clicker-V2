@@ -629,7 +629,7 @@
                 updateStatsDisplay();
                 renderShop();
 
-                alert("🔄 Partie réinitialisée !");
+                openTab('main');
             }
         }
 
@@ -730,13 +730,13 @@
                     const card = document.createElement("div");
                     card.className = "card";
                     card.innerHTML = `
-                                            <p>
-                                                ${car.name}<br>
-                                                💰 ${formatNumber(cost)}<br>
-                                                🚗 ${car.count}<br>
-                                                ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
-                                                ⚡ CPS total : ${formatNumber(car.count * car.cps)}
-                                            </p>
+                                                <p>
+                                                    ${car.name}<br>
+                                                    💰 ${formatNumber(cost)}<br>
+                                                    🚗 ${car.count}<br>
+                                                    ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
+                                                    ⚡ CPS total : ${formatNumber(car.count * car.cps)}
+                                                </p>
 `;
                     card.onclick = () => {
                         if (credits >= cost) {
@@ -938,11 +938,11 @@
                 succes.forEach(s => {
                     const classe = s.obtenu ? "succes-obtenu" : "succes-non-obtenu";
                     succesDiv.innerHTML += `
-                <div class="card ${classe}" style="margin:5px; padding:10px;">
-                    <strong>${s.nom}</strong><br>
-                    <span>${s.description}</span>
-                </div>
-            `;
+                    <div class="card ${classe}" style="margin:5px; padding:10px;">
+                        <strong>${s.nom}</strong><br>
+                        <span>${s.description}</span>
+                    </div>
+                `;
                 });
                 succesDiv.style.display = "block";
             }
@@ -955,11 +955,11 @@
                 } else {
                     upgradesAchetees.forEach(upg => {
                         upgradesDiv.innerHTML += `
-                    <div class="card succes-obtenu" style="margin:5px; padding:10px;">
-                        <strong>${upg.name}</strong><br>
-                        <span>${upg.desc}</span>
-                    </div>
-                `;
+                        <div class="card succes-obtenu" style="margin:5px; padding:10px;">
+                            <strong>${upg.name}</strong><br>
+                            <span>${upg.desc}</span>
+                        </div>
+                    `;
                     });
                 }
                 upgradesDiv.style.display = "block";
@@ -992,12 +992,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
