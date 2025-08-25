@@ -381,7 +381,7 @@
 
         const carsCommunes = [
             { type: "separator", label: "🚗 Communes" },
-            { name: "Porsche Cayman", baseCost: 25, cps: 1, count: 0, achete: false },
+            { name: "Porsche Cayman", baseCost: 25, cps: 1, count: 0, rang: "commune", achete: false },
             { name: "Audi R8", baseCost: 120, cps: 3, count: 0, rang: "commune", achete: false },
             { name: "Mercedes AMG GT", baseCost: 250, cps: 5, count: 0, rang: "commune", achete: false },
             { name: "Aston Martin Vantage", baseCost: 400, cps: 8, count: 0, rang: "commune", achete: false },
@@ -449,7 +449,7 @@
             { name: "Apollo IE", baseCost: 350000000, cps: 3000000, count: 0, rang: "mythique", achete: false },
             { name: "Devel Sixteen", baseCost: 400000000, cps: 4000000, count: 0, rang: "mythique", achete: false },
             { name: "Ferrari 250 GTO", baseCost: 500000000, cps: 5000000, count: 0, rang: "mythique", achete: false },
-            { name: "Mazda 787B", baseCost: 600000000, cps: 6000000, count: 0, rang: "mythique", achete: false },
+            { name: "Mazda 787B", baseCost: 787000000000, cps: 600000000, count: 0, rang: "mythique", achete: false },
         ];
 
         // Fusionner toutes les voitures en un seul tableau
@@ -498,7 +498,7 @@
             { name: "Carrosserie Titane 🛡️", cost: 250000, effect: () => { baseClickValue *= 1.6; }, desc: "Une carrosserie ultra légère pour des clics plus rentables" },
             { name: "Equipe d'Ingénieurs 👨‍🔧", cost: 500000, effect: () => { totalCPS *= 1.8; }, desc: "Des experts pour optimiser tous vos revenus" },
             { name: "ECU 💻", cost: 1200000, effect: () => { baseClickValue *= 1.8; }, desc: "Informatique optimisé pour chaque action pour des clics surpuissants" },
-            { name: "Max Verstappen 🏎️", cost: 3300000, effect: () => { totalCPS += 1.8; }, desc: "Un pilote rapide et précis" },
+            { name: "Max Verstappen 🏎️", cost: 3300000, effect: () => { totalCPS *= 1.8; }, desc: "Un pilote rapide et précis" },
             { name: "Usine automatisée 🏭", cost: 5000000, effect: () => { totalCPS *= 2; }, desc: "Production automatisée pour des revenus passifs doublés" },
             { name: "ConceptCar 🚀", cost: 20000000, effect: () => { baseClickValue *= 2; }, desc: "Un concept révolutionnaire qui multiplie vos clics" },
             { name: "Ayrton Senna 🏎️", cost: 27000000, effect: () => { baseClickValue *= 1.6; }, desc: "Une légende du volant pour vous guider" },
@@ -554,6 +554,15 @@
             return tracks.filter(t => t.bought);
         }
 
+        function getCarsByRang(rang) {
+            return cars.filter(car => car.rang === rang && car.name);
+        }
+
+        function hasAllCarsOfRang(rang) {
+            return getCarsByRang(rang).every(car => getGarage().some(v => v.name === car.name));
+        }
+
+
         const succes = [
             { nom: "Premier Clic", description: "Clicker 1 fois.", condition: () => totalClicks >= 1, obtenu: false },
             { nom: "Premier Achat", description: "Acheter votre première voiture", condition: () => getGarage().length >= 1, obtenu: false },
@@ -579,20 +588,20 @@
             { nom: "Légende Vivante", description: "Acheter une voiture légendaire", condition: () => getGarage().some(v => v.rang === "légendaire"), obtenu: false },
             { nom: "Mythe Automobile", description: "Acheter une voiture mythique", condition: () => getGarage().some(v => v.rang === "mythique"), obtenu: false },
             { nom: "Garage Universel", description: "Posséder une voiture de chaque catégorie", condition: () => ["commune", "rare", "épique", "légendaire", "mythique"].every(rang => getGarage().some(v => v.rang === rang)), obtenu: false },
-            { nom: "L'Enfer Vert", description: "Acheter le circuit du Nurbürgring", condition: () => getCircuits().includes("Nurbürgring Nordschleife"), obtenu: false },
-            { nom: "Les 24 Heures", description: "Acheter le circuit du Mans", condition: () => getCircuits().includes("Le Mans"), obtenu: false },
-            { nom: "Collection Commune", description: "Obtenir toutes les voitures communes", condition: () => toutesLesCommunes.every(name => getGarage().some(v => v.name === name)), obtenu: false },
-            { nom: "Collection Rare", description: "Obtenir toutes les voitures rares", condition: () => toutesLesRares.every(name => getGarage().some(v => v.name === name)), obtenu: false },
-            { nom: "Collection Épique", description: "Obtenir toutes les voitures épiques", condition: () => toutesLesÉpiques.every(name => getGarage().some(v => v.name === name)), obtenu: false },
-            { nom: "Collection Légendaire", description: "Obtenir toutes les voitures légendaires", condition: () => toutesLesLégendaires.every(nom => getGarage().some(v => v.nom === nom)), obtenu: false },
-            { nom: "Collection Mythique", description: "Obtenir toutes les voitures mythiques", condition: () => toutesLesMythiques.every(name => getGarage().some(v => v.name === name)), obtenu: false },
+            { nom: "L'Enfer Vert", description: "Acheter le circuit du Nurbürgring", condition: () => getCircuits().some(v => v.name === "Nurbürgring Nordschleife"), obtenu: false },
+            { nom: "Les 24 Heures", description: "Acheter le circuit du Mans", condition: () => getCircuits().some(v => v.name === "Le Mans"), obtenu: false },
+            { nom: "Collection Commune", description: "Obtenir toutes les voitures communes", condition: () => hasAllCarsOfRang("commune"), obtenu: false },
+            { nom: "Collection Rare", description: "Obtenir toutes les voitures rares", condition: () => hasAllCarsOfRang("rare"), obtenu: false },
+            { nom: "Collection Épique", description: "Obtenir toutes les voitures épiques", condition: () => hasAllCarsOfRang("epique"), obtenu: false },
+            { nom: "Collection Légendaire", description: "Obtenir toutes les voitures légendaires", condition: () => hasAllCarsOfRang("legendaire"), obtenu: false },
+            { nom: "Collection Mythique", description: "Obtenir toutes les voitures mythiques", condition: () => hasAllCarsOfRang("mythique"), obtenu: false },
             { nom: "Une 3 places", description: "Obtenir la McLaren F1", condition: () => getGarage().some(v => v.name === "McLaren F1"), obtenu: false },
             { nom: "Moteur Wankel", description: "Obtenir la Mazda 787B", condition: () => getGarage().some(v => v.name === "Mazda 787B"), obtenu: false },
             { nom: "Au Complet", description: "Acheter toutes les voitures", condition: () => cars.filter(c => !c.type).every(c => c.count > 0), obtenu: false },
             { nom: "Strict Nécessaire", description: "Acheter toutes les améliorations", condition: () => upgrades.every(u => u.bought), obtenu: false },
             { nom: "Tour du Monde", description: "Acheter tous les circuits", condition: () => tracks.every(t => t.bought), obtenu: false },
-            { nom: "Tu Tu Tu Du", description: "Simply Lovely", condition: () => getAmeliorations().includes("Max Verstappen 🏎️"), obtenu: false },
-            { nom: "Sir Lewis Hamilton", description: "Recruter le meilleur pilote", condition: () => getAmeliorations().includes("Lewis hamilton 🏎️"), obtenu: false },
+            { nom: "Tu Tu Tu Du", description: "Simply Lovely", condition: () => getAmeliorations().some(v => v.name === "Max Verstappen 🏎️"), obtenu: false },
+            { nom: "Sir Lewis Hamilton", description: "through goes hamilton", condition: () => getAmeliorations().some(v => v.name === "Lewis Hamilton 🏎️"), obtenu: false },
         ];
 
         function resetGame() {
@@ -699,10 +708,10 @@
 
         function formatNumber(num) {
             num = Math.floor(num);
-            if (num >= 1e21) return (num / 1e9).toFixed(1).replace(/\.0$/, "") + "Sx";
-            if (num >= 1e18) return (num / 1e9).toFixed(1).replace(/\.0$/, "") + "Qi";
-            if (num >= 1e15) return (num / 1e9).toFixed(1).replace(/\.0$/, "") + "Q";
-            if (num >= 1e12) return (num / 1e9).toFixed(1).replace(/\.0$/, "") + "T";
+            if (num >= 1e21) return (num / 1e21).toFixed(1).replace(/\.0$/, "") + "Sx";
+            if (num >= 1e18) return (num / 1e18).toFixed(1).replace(/\.0$/, "") + "Qi";
+            if (num >= 1e15) return (num / 1e15).toFixed(1).replace(/\.0$/, "") + "Q";
+            if (num >= 1e12) return (num / 1e12).toFixed(1).replace(/\.0$/, "") + "T";
             if (num >= 1e9) return (num / 1e9).toFixed(1).replace(/\.0$/, "") + "B";
             if (num >= 1e6) return (num / 1e6).toFixed(1).replace(/\.0$/, "") + "M";
             if (num >= 1e3) return (num / 1e3).toFixed(1).replace(/\.0$/, "") + "K";
@@ -710,8 +719,9 @@
         }
 
         function updateCreditsDisplay() {
+            cpcdisplay = Math.round(baseClickValue * 100) / 100;
             document.getElementById("credits").innerText = "Crédits : " + formatNumber(credits);
-            document.getElementById("cpcDisplay").innerText = "Crédits par clic : " + (Math.round(baseClickValue * 100) / 100);
+            document.getElementById("cpcDisplay").innerText = "Crédits par clic : " + formatNumber(cpcdisplay);
             document.getElementById("cpsDisplay").innerText = "CPS total : " + formatNumber(totalCPS);
         }
 
@@ -730,13 +740,13 @@
                     const card = document.createElement("div");
                     card.className = "card";
                     card.innerHTML = `
-                                                <p>
-                                                    ${car.name}<br>
-                                                    💰 ${formatNumber(cost)}<br>
-                                                    🚗 ${car.count}<br>
-                                                    ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
-                                                    ⚡ CPS total : ${formatNumber(car.count * car.cps)}
-                                                </p>
+                                                    <p>
+                                                        ${car.name}<br>
+                                                        💰 ${formatNumber(cost)}<br>
+                                                        🚗 ${car.count}<br>
+                                                        ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
+                                                        ⚡ CPS total : ${formatNumber(car.count * car.cps)}
+                                                    </p>
 `;
                     card.onclick = () => {
                         if (credits >= cost) {
@@ -844,7 +854,7 @@
         function updateStatsDisplay() {
             document.getElementById("total-clicks").innerText = totalClicks;
             document.getElementById("total-cps").innerText = formatNumber(totalCPS);
-            document.getElementById("total-cpc").innerText = Math.round(baseClickValue * 100) / 100;
+            document.getElementById("total-cpc").innerText = formatNumber(cpcdisplay);
 
             const elapsedThisSession = Math.floor((Date.now() - lastSessionStart) / 1000);
             const total = (totalPlayTime || 0) + elapsedThisSession;
@@ -938,11 +948,11 @@
                 succes.forEach(s => {
                     const classe = s.obtenu ? "succes-obtenu" : "succes-non-obtenu";
                     succesDiv.innerHTML += `
-                    <div class="card ${classe}" style="margin:5px; padding:10px;">
-                        <strong>${s.nom}</strong><br>
-                        <span>${s.description}</span>
-                    </div>
-                `;
+                        <div class="card ${classe}" style="margin:5px; padding:10px;">
+                            <strong>${s.nom}</strong><br>
+                            <span>${s.description}</span>
+                        </div>
+                    `;
                 });
                 succesDiv.style.display = "block";
             }
@@ -955,11 +965,11 @@
                 } else {
                     upgradesAchetees.forEach(upg => {
                         upgradesDiv.innerHTML += `
-                        <div class="card succes-obtenu" style="margin:5px; padding:10px;">
-                            <strong>${upg.name}</strong><br>
-                            <span>${upg.desc}</span>
-                        </div>
-                    `;
+                            <div class="card succes-obtenu" style="margin:5px; padding:10px;">
+                                <strong>${upg.name}</strong><br>
+                                <span>${upg.desc}</span>
+                            </div>
+                        `;
                     });
                 }
                 upgradesDiv.style.display = "block";
