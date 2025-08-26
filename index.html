@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -381,120 +382,114 @@
 
         const carsCommunes = [
             { type: "separator", label: "🚗 Communes" },
-            { name: "Porsche Cayman", baseCost: 25, cps: 1, count: 0, rang: "commune", achete: false },
-            { name: "Audi R8", baseCost: 120, cps: 3, count: 0, rang: "commune", achete: false },
-            { name: "Mercedes AMG GT", baseCost: 250, cps: 5, count: 0, rang: "commune", achete: false },
-            { name: "Aston Martin Vantage", baseCost: 400, cps: 8, count: 0, rang: "commune", achete: false },
-            { name: "Nissan 370Z", baseCost: 600, cps: 10, count: 0, rang: "commune", achete: false },
-            { name: "Toyota Supra Mk5", baseCost: 750, cps: 12, count: 0, rang: "commune", achete: false },
-            { name: "Ford Mustang GT", baseCost: 900, cps: 15, count: 0, rang: "commune", achete: false },
-            { name: "Chevrolet Camaro ZL1", baseCost: 1100, cps: 18, count: 0, rang: "commune", achete: false },
-            { name: "BMW M4", baseCost: 1300, cps: 20, count: 0, rang: "commune", achete: false },
-            { name: "Lotus Elise", baseCost: 1500, cps: 22, count: 0, rang: "commune", achete: false },
-            { name: "Mazda MX-5", baseCost: 1700, cps: 24, count: 0, rang: "commune", achete: false },
-            { name: "Volkswagen Golf GTI", baseCost: 1900, cps: 26, count: 0, rang: "commune", achete: false },
-            { name: "Subaru BRZ", baseCost: 2100, cps: 28, count: 0, rang: "commune", achete: false },
-            { name: "Hyundai i30 N", baseCost: 1700, cps: 24, count: 0, rang: "commune", achete: false },
-            { name: "Renault Mégane RS", baseCost: 1900, cps: 26, count: 0, rang: "commune", achete: false },
-            { name: "Mini Cooper S", baseCost: 2100, cps: 28, count: 0, rang: "commune", achete: false },
-            { name: "Fiat 500 Abarth", baseCost: 2300, cps: 30, count: 0, rang: "commune", achete: false },
-
-
+            { name: "Fiat 500 Abarth", baseCost: 25, cps: 1, count: 0, rang: "commune", achete: false },
+            { name: "Mini Cooper S", baseCost: 60, cps: 2, count: 0, rang: "commune", achete: false },
+            { name: "Renault Mégane RS", baseCost: 120, cps: 4, count: 0, rang: "commune", achete: false },
+            { name: "Hyundai i30 N", baseCost: 200, cps: 7, count: 0, rang: "commune", achete: false },
+            { name: "Subaru BRZ", baseCost: 300, cps: 10, count: 0, rang: "commune", achete: false },
+            { name: "Volkswagen Golf GTI", baseCost: 450, cps: 14, count: 0, rang: "commune", achete: false },
+            { name: "Mazda MX-5", baseCost: 650, cps: 20, count: 0, rang: "commune", achete: false },
+            { name: "Porsche Cayman", baseCost: 900, cps: 28, count: 0, rang: "commune", achete: false },
+            { name: "Audi R8", baseCost: 1200, cps: 38, count: 0, rang: "commune", achete: false },
+            { name: "Mercedes AMG GT", baseCost: 1600, cps: 50, count: 0, rang: "commune", achete: false },
+            { name: "Aston Martin Vantage", baseCost: 2100, cps: 65, count: 0, rang: "commune", achete: false },
+            { name: "Nissan 370Z", baseCost: 2800, cps: 85, count: 0, rang: "commune", achete: false },
+            { name: "Toyota Supra Mk5", baseCost: 3600, cps: 110, count: 0, rang: "commune", achete: false },
+            { name: "Ford Mustang GT", baseCost: 4500, cps: 140, count: 0, rang: "commune", achete: false },
+            { name: "Chevrolet Camaro ZL1", baseCost: 5600, cps: 180, count: 0, rang: "commune", achete: false },
+            { name: "BMW M4", baseCost: 7000, cps: 230, count: 0, rang: "commune", achete: false },
+            { name: "Lotus Elise", baseCost: 9000, cps: 300, count: 0, rang: "commune", achete: false },
         ];
 
         const carsRares = [
             { type: "separator", label: "🏎️ Rares" },
-            { name: "Ferrari F8 Tributo", baseCost: 5000, cps: 30, count: 0, rang: "rare", achete: false },
-            { name: "Lamborghini Aventador", baseCost: 12000, cps: 50, count: 0, rang: "rare", achete: false },
-            { name: "Porsche 911 GT3 RS", baseCost: 20000, cps: 75, count: 0, rang: "rare", achete: false },
-            { name: "McLaren 720S", baseCost: 35000, cps: 100, count: 0, rang: "rare", achete: false },
-            { name: "Maserati MC20", baseCost: 50000, cps: 150, count: 0, rang: "rare", achete: false },
-            { name: "Audi RS7", baseCost: 65000, cps: 200, count: 0, rang: "rare", achete: false },
-            { name: "Jaguar F-Type SVR", baseCost: 85000, cps: 250, count: 0, rang: "rare", achete: false },
-            { name: "Corvette C8 Z06", baseCost: 100000, cps: 300, count: 0, rang: "rare", achete: false },
-            { name: "Lexus LFA", baseCost: 140000, cps: 400, count: 0, rang: "rare", achete: false },
-            { name: "Alpine A110S", baseCost: 180000, cps: 500, count: 0, rang: "rare", achete: false },
-            { name: "BMW M2 Competition", baseCost: 200000, cps: 550, count: 0, rang: "rare", achete: false },
-            { name: "Toyota GR Yaris", baseCost: 220000, cps: 600, count: 0, rang: "rare", achete: false },
-            { name: "Peugeot 508 PSE", baseCost: 250000, cps: 650, count: 0, rang: "rare", achete: false },
-            { name: "Cupra Formentor VZ5", baseCost: 200000, cps: 550, count: 0, rang: "rare", achete: false },
-            { name: "Alfa Romeo Giulia Quadrifoglio", baseCost: 220000, cps: 600, count: 0, rang: "rare", achete: false },
-            { name: "Honda NSX (2022)", baseCost: 250000, cps: 650, count: 0, rang: "rare", achete: false },
-            { name: "BMW M5 CS", baseCost: 280000, cps: 700, count: 0, rang: "rare", achete: false },
-
-
+            { name: "Ferrari F8 Tributo", baseCost: 12000, cps: 400, count: 0, rang: "rare", achete: false },
+            { name: "Lamborghini Aventador", baseCost: 18000, cps: 600, count: 0, rang: "rare", achete: false },
+            { name: "Porsche 911 GT3 RS", baseCost: 25000, cps: 850, count: 0, rang: "rare", achete: false },
+            { name: "McLaren 720S", baseCost: 35000, cps: 1200, count: 0, rang: "rare", achete: false },
+            { name: "Maserati MC20", baseCost: 50000, cps: 1600, count: 0, rang: "rare", achete: false },
+            { name: "Audi RS7", baseCost: 70000, cps: 2100, count: 0, rang: "rare", achete: false },
+            { name: "Jaguar F-Type SVR", baseCost: 95000, cps: 2700, count: 0, rang: "rare", achete: false },
+            { name: "Corvette C8 Z06", baseCost: 125000, cps: 3500, count: 0, rang: "rare", achete: false },
+            { name: "Lexus LFA", baseCost: 160000, cps: 4500, count: 0, rang: "rare", achete: false },
+            { name: "Alpine A110S", baseCost: 200000, cps: 6000, count: 0, rang: "rare", achete: false },
+            { name: "BMW M2 Competition", baseCost: 250000, cps: 7500, count: 0, rang: "rare", achete: false },
+            { name: "Toyota GR Yaris", baseCost: 300000, cps: 9000, count: 0, rang: "rare", achete: false },
+            { name: "Peugeot 508 PSE", baseCost: 360000, cps: 11000, count: 0, rang: "rare", achete: false },
+            { name: "Cupra Formentor VZ5", baseCost: 420000, cps: 13000, count: 0, rang: "rare", achete: false },
+            { name: "Alfa Romeo Giulia Quadrifoglio", baseCost: 500000, cps: 16000, count: 0, rang: "rare", achete: false },
+            { name: "Honda NSX (2022)", baseCost: 600000, cps: 20000, count: 0, rang: "rare", achete: false },
+            { name: "BMW M5 CS", baseCost: 750000, cps: 25000, count: 0, rang: "rare", achete: false },
         ];
 
         const carsEpique = [
             { type: "separator", label: "🔥 Épiques" },
-            { name: "Ferrari LaFerrari", baseCost: 250000, cps: 750, count: 0, rang: "épique", achete: false },
-            { name: "Porsche 918 Spyder", baseCost: 400000, cps: 1000, count: 0, rang: "épique", achete: false },
-            { name: "Mercedes SLR McLaren", baseCost: 600000, cps: 1500, count: 0, rang: "épique", achete: false },
-            { name: "Aston Martin Vulcan", baseCost: 900000, cps: 2000, count: 0, rang: "épique", achete: false },
-            { name: "Pagani Utopia", baseCost: 1200000, cps: 3000, count: 0, rang: "épique", achete: false },
-            { name: "Ferrari SF90 Stradale", baseCost: 1500000, cps: 4000, count: 0, rang: "épique", achete: false },
-            { name: "Lamborghini Huracán Performante", baseCost: 2000000, cps: 5000, count: 0, rang: "épique", achete: false },
-            { name: "Ford GT (2017)", baseCost: 2500000, cps: 6000, count: 0, rang: "épique", achete: false },
-            { name: "Rimac Nevera", baseCost: 3200000, cps: 8000, count: 0, rang: "épique", achete: false },
-            { name: "Lotus Evija", baseCost: 4000000, cps: 10000, count: 0, rang: "épique", achete: false },
-            { name: "De Tomaso P72", baseCost: 4800000, cps: 12000, count: 0, rang: "épique", achete: false },
-            { name: "BMW i8", baseCost: 5000000, cps: 13000, count: 0, rang: "épique", achete: false },
-            { name: "Tesla Roadster (2023)", baseCost: 6000000, cps: 16000, count: 0, rang: "épique", achete: false },
-            { name: "Nissan GT-R Nismo", baseCost: 7000000, cps: 18000, count: 0, rang: "épique", achete: false },
-            { name: "Zenvo TSR-S", baseCost: 5000000, cps: 13000, count: 0, rang: "épique", achete: false },
-            { name: "Glickenhaus SCG 004S", baseCost: 6000000, cps: 16000, count: 0, rang: "épique", achete: false },
-            { name: "Ferrari 812 Superfast", baseCost: 7000000, cps: 18000, count: 0, rang: "épique", achete: false },
-            { name: "Lamborghini Revuelto", baseCost: 8000000, cps: 20000, count: 0, rang: "épique", achete: false },
-
-
+            { name: "Ferrari LaFerrari", baseCost: 1_000_000, cps: 40000, count: 0, rang: "épique", achete: false },
+            { name: "Porsche 918 Spyder", baseCost: 1_400_000, cps: 55000, count: 0, rang: "épique", achete: false },
+            { name: "Mercedes SLR McLaren", baseCost: 2_000_000, cps: 75000, count: 0, rang: "épique", achete: false },
+            { name: "Aston Martin Vulcan", baseCost: 3_000_000, cps: 110000, count: 0, rang: "épique", achete: false },
+            { name: "Pagani Utopia", baseCost: 4_200_000, cps: 150000, count: 0, rang: "épique", achete: false },
+            { name: "Ferrari SF90 Stradale", baseCost: 6_000_000, cps: 210000, count: 0, rang: "épique", achete: false },
+            { name: "Lamborghini Huracán Performante", baseCost: 8_500_000, cps: 280000, count: 0, rang: "épique", achete: false },
+            { name: "Ford GT (2017)", baseCost: 12_000_000, cps: 380000, count: 0, rang: "épique", achete: false },
+            { name: "Rimac Nevera", baseCost: 16_000_000, cps: 500000, count: 0, rang: "épique", achete: false },
+            { name: "Lotus Evija", baseCost: 22_000_000, cps: 650000, count: 0, rang: "épique", achete: false },
+            { name: "De Tomaso P72", baseCost: 30_000_000, cps: 850000, count: 0, rang: "épique", achete: false },
+            { name: "BMW i8", baseCost: 40_000_000, cps: 1_100_000, count: 0, rang: "épique", achete: false },
+            { name: "Tesla Roadster (2023)", baseCost: 55_000_000, cps: 1_400_000, count: 0, rang: "épique", achete: false },
+            { name: "Nissan GT-R Nismo", baseCost: 70_000_000, cps: 1_800_000, count: 0, rang: "épique", achete: false },
+            { name: "Zenvo TSR-S", baseCost: 90_000_000, cps: 2_200_000, count: 0, rang: "épique", achete: false },
+            { name: "Glickenhaus SCG 004S", baseCost: 120_000_000, cps: 2_800_000, count: 0, rang: "épique", achete: false },
+            { name: "Ferrari 812 Superfast", baseCost: 150_000_000, cps: 3_500_000, count: 0, rang: "épique", achete: false },
+            { name: "Lamborghini Revuelto", baseCost: 200_000_000, cps: 4_500_000, count: 0, rang: "épique", achete: false },
         ];
 
         const carsLegendaire = [
             { type: "separator", label: "🏆 Légendaires" },
-            { name: "Bugatti Chiron", baseCost: 6000000, cps: 15000, count: 0, rang: "légendaire", achete: false },
-            { name: "Aston Martin Valkyrie", baseCost: 8000000, cps: 20000, count: 0, rang: "légendaire", achete: false },
-            { name: "McLaren P1", baseCost: 10000000, cps: 25000, count: 0, rang: "légendaire", achete: false },
-            { name: "Lamborghini Veneno", baseCost: 12000000, cps: 30000, rang: "légendaire", count: 0, achete: false },
-            { name: "Ferrari F40", baseCost: 16000000, cps: 40000, count: 0, rang: "légendaire", achete: false },
-            { name: "Porsche 911 GT1 Straßenversion", baseCost: 20000000, cps: 50000, count: 0, rang: "légendaire", achete: false },
-            { name: "Koenigsegg Agera", baseCost: 24000000, cps: 60000, count: 0, rang: "légendaire", achete: false },
-            { name: "Pagani Huayra", baseCost: 30000000, cps: 75000, count: 0, rang: "légendaire", achete: false },
-            { name: "Ferrari Enzo", baseCost: 40000000, cps: 100000, count: 0, rang: "légendaire", achete: false },
-            { name: "Lamborghini Miura", baseCost: 48000000, cps: 120000, count: 0, rang: "légendaire", achete: false },
-            { name: "Ford GT40", baseCost: 50000000, cps: 130000, count: 0, rang: "légendaire", achete: false },
-            { name: "Porsche Carrera GT", baseCost: 60000000, cps: 150000, count: 0, rang: "légendaire", achete: false },
-            { name: "Renault R.S.01", baseCost: 70000000, cps: 180000, count: 0, rang: "légendaire", achete: false },
-            { name: "Porsche 959", baseCost: 50000000, cps: 130000, count: 0, rang: "légendaire", achete: false },
-            { name: "Jaguar XJ220", baseCost: 60000000, cps: 150000, count: 0, rang: "légendaire", achete: false },
-            { name: "BMW M1", baseCost: 70000000, cps: 180000, count: 0, rang: "légendaire", achete: false },
-            { name: "Lancia Stratos", baseCost: 80000000, cps: 200000, count: 0, rang: "légendaire", achete: false },
-
-
+            { name: "Bugatti Chiron", baseCost: 250_000_000, cps: 6_000_000, count: 0, rang: "légendaire", achete: false },
+            { name: "Aston Martin Valkyrie", baseCost: 350_000_000, cps: 8_500_000, count: 0, rang: "légendaire", achete: false },
+            { name: "McLaren P1", baseCost: 500_000_000, cps: 12_000_000, count: 0, rang: "légendaire", achete: false },
+            { name: "Lamborghini Veneno", baseCost: 700_000_000, cps: 16_000_000, count: 0, rang: "légendaire", achete: false },
+            { name: "Ferrari F40", baseCost: 1_000_000_000, cps: 22_000_000, count: 0, rang: "légendaire", achete: false },
+            { name: "Porsche 911 GT1 Straßenversion", baseCost: 1_400_000_000, cps: 30_000_000, count: 0, rang: "légendaire", achete: false },
+            { name: "Koenigsegg Agera", baseCost: 2_000_000_000, cps: 40_000_000, count: 0, rang: "légendaire", achete: false },
+            { name: "Pagani Huayra", baseCost: 3_000_000_000, cps: 55_000_000, count: 0, rang: "légendaire", achete: false },
+            { name: "Ferrari Enzo", baseCost: 4_000_000_000, cps: 75_000_000, count: 0, rang: "légendaire", achete: false },
+            { name: "Lamborghini Miura", baseCost: 5_500_000_000, cps: 100_000_000, count: 0, rang: "légendaire", achete: false },
+            { name: "Ford GT40", baseCost: 7_000_000_000, cps: 130_000_000, count: 0, rang: "légendaire", achete: false },
+            { name: "Porsche Carrera GT", baseCost: 9_000_000_000, cps: 160_000_000, count: 0, rang: "légendaire", achete: false },
+            { name: "Renault R.S.01", baseCost: 12_000_000_000, cps: 200_000_000, count: 0, rang: "légendaire", achete: false },
+            { name: "Porsche 959", baseCost: 15_000_000_000, cps: 250_000_000, count: 0, rang: "légendaire", achete: false },
+            { name: "Jaguar XJ220", baseCost: 18_000_000_000, cps: 300_000_000, count: 0, rang: "légendaire", achete: false },
+            { name: "BMW M1", baseCost: 22_000_000_000, cps: 360_000_000, count: 0, rang: "légendaire", achete: false },
+            { name: "Lancia Stratos", baseCost: 26_000_000_000, cps: 430_000_000, count: 0, rang: "légendaire", achete: false },
         ];
 
         const carsMythique = [
             { type: "separator", label: "🌌 Mythiques" },
-            { name: "Mercedes AMG ONE", baseCost: 60000000, cps: 400000, count: 0, rang: "mythique", achete: false },
-            { name: "Bugatti Tourbillon", baseCost: 80000000, cps: 500000, count: 0, rang: "mythique", achete: false },
-            { name: "McLaren F1", baseCost: 100000000, cps: 600000, count: 0, rang: "mythique", achete: false },
-            { name: "Koenigsegg Jesko", baseCost: 120000000, cps: 750000, count: 0, rang: "mythique", achete: false },
-            { name: "Koenigsegg Jesko Absolute", baseCost: 150000000, cps: 1000000, count: 0, rang: "mythique", achete: false },
-            { name: "SSC Tuatara", baseCost: 200000000, cps: 1500000, count: 0, rang: "mythique", achete: false },
-            { name: "Bugatti Veyron Super Sport", baseCost: 250000000, cps: 2000000, count: 0, rang: "mythique", achete: false },
-            { name: "Hennessey Venom F5", baseCost: 300000000, cps: 2500000, count: 0, rang: "mythique", achete: false },
-            { name: "Apollo IE", baseCost: 350000000, cps: 3000000, count: 0, rang: "mythique", achete: false },
-            { name: "Devel Sixteen", baseCost: 400000000, cps: 4000000, count: 0, rang: "mythique", achete: false },
-            { name: "Ferrari 250 GTO", baseCost: 500_000_000, cps: 5_000_000, count: 0, rang: "mythique", achete: false },
-            { name: "Lotus Type 66", baseCost: 600_000_000, cps: 7_000_000, count: 0, rang: "mythique", achete: false },
-            { name: "Czinger 21C", baseCost: 750_000_000, cps: 8_000_000, count: 0, rang: "mythique", achete: false },
-            { name: "Ferrari Vision Gran Turismo", baseCost: 1_000_000_000, cps: 10_000_000, count: 0, rang: "mythique", achete: false },
-            { name: "Pininfarina Battista", baseCost: 600_000_000, cps: 70_000_000, count: 0, rang: "mythique", achete: false },
-            { name: "Delage D12", baseCost: 750_000_000, cps: 75_000_000, count: 0, rang: "mythique", achete: false },
-            { name: "Ruf CTR3", baseCost: 900_000_000, cps: 80_000_000, count: 0, rang: "mythique", achete: false },
-            { name: "Lamborghini SC20", baseCost: 1_200_000_000, cps: 120_000_000, count: 0, rang: "mythique", achete: false },
-            { name: "Mazda 787B", baseCost: 787_000_000_000, cps: 600_000_000, count: 0, rang: "mythique", achete: false },
-
+            { name: "Mercedes AMG ONE", baseCost: 30_000_000_000, cps: 500_000_000, count: 0, rang: "mythique", achete: false },
+            { name: "Bugatti Tourbillon", baseCost: 40_000_000_000, cps: 700_000_000, count: 0, rang: "mythique", achete: false },
+            { name: "McLaren F1", baseCost: 55_000_000_000, cps: 1_000_000_000, count: 0, rang: "mythique", achete: false },
+            { name: "Koenigsegg Jesko", baseCost: 70_000_000_000, cps: 1_400_000_000, count: 0, rang: "mythique", achete: false },
+            { name: "Koenigsegg Jesko Absolute", baseCost: 90_000_000_000, cps: 1_800_000_000, count: 0, rang: "mythique", achete: false },
+            { name: "SSC Tuatara", baseCost: 120_000_000_000, cps: 2_400_000_000, count: 0, rang: "mythique", achete: false },
+            { name: "Bugatti Veyron Super Sport", baseCost: 160_000_000_000, cps: 3_200_000_000, count: 0, rang: "mythique", achete: false },
+            { name: "Hennessey Venom F5", baseCost: 200_000_000_000, cps: 4_000_000_000, count: 0, rang: "mythique", achete: false },
+            { name: "Apollo IE", baseCost: 250_000_000_000, cps: 5_000_000_000, count: 0, rang: "mythique", achete: false },
+            { name: "Devel Sixteen", baseCost: 300_000_000_000, cps: 6_000_000_000, count: 0, rang: "mythique", achete: false },
+            { name: "Ferrari 250 GTO", baseCost: 400_000_000_000, cps: 8_500_000_000, count: 0, rang: "mythique", achete: false },
+            { name: "Lotus Type 66", baseCost: 500_000_000_000, cps: 11_000_000_000, count: 0, rang: "mythique", achete: false },
+            { name: "Czinger 21C", baseCost: 650_000_000_000, cps: 14_000_000_000, count: 0, rang: "mythique", achete: false },
+            { name: "Mazada 787B", baseCost: 787_000_000_000, cps: 16_000_000_000, count: 0, rang: "mythique", achete: false },
+            { name: "Ferrari Vision Gran Turismo", baseCost: 800_000_000_000, cps: 18_000_000_000, count: 0, rang: "mythique", achete: false },
+            { name: "Pininfarina Battista", baseCost: 1_000_000_000_000, cps: 23_000_000_000, count: 0, rang: "mythique", achete: false },
+            { name: "Delage D12", baseCost: 1_200_000_000_000, cps: 28_000_000_000, count: 0, rang: "mythique", achete: false },
+            { name: "Ruf CTR3", baseCost: 1_400_000_000_000, cps: 34_000_000_000, count: 0, rang: "mythique", achete: false },
+            { name: "Lamborghini SC20", baseCost: 1_700_000_000_000, cps: 40_000_000_000, count: 0, rang: "mythique", achete: false },
         ];
+
+
+
 
         // Fusionner toutes les voitures en un seul tableau
         const cars = [
@@ -784,13 +779,13 @@
                     const card = document.createElement("div");
                     card.className = "card";
                     card.innerHTML = `
-                                                    <p>
-                                                        ${car.name}<br>
-                                                        💰 ${formatNumber(cost)}<br>
-                                                        🚗 ${car.count}<br>
-                                                        ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
-                                                        ⚡ CPS total : ${formatNumber(car.count * car.cps)}
-                                                    </p>
+                                                                    <p>
+                                                                        ${car.name}<br>
+                                                                        💰 ${formatNumber(cost)}<br>
+                                                                        🚗 ${car.count}<br>
+                                                                        ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
+                                                                        ⚡ CPS total : ${formatNumber(car.count * car.cps)}
+                                                                    </p>
 `;
                     card.onclick = () => {
                         if (credits >= cost) {
@@ -992,11 +987,11 @@
                 succes.forEach(s => {
                     const classe = s.obtenu ? "succes-obtenu" : "succes-non-obtenu";
                     succesDiv.innerHTML += `
-                        <div class="card ${classe}" style="margin:5px; padding:10px;">
-                            <strong>${s.nom}</strong><br>
-                            <span>${s.description}</span>
-                        </div>
-                    `;
+                                        <div class="card ${classe}" style="margin:5px; padding:10px;">
+                                            <strong>${s.nom}</strong><br>
+                                            <span>${s.description}</span>
+                                        </div>
+                                    `;
                 });
                 succesDiv.style.display = "block";
             }
@@ -1009,11 +1004,11 @@
                 } else {
                     upgradesAchetees.forEach(upg => {
                         upgradesDiv.innerHTML += `
-                            <div class="card succes-obtenu" style="margin:5px; padding:10px;">
-                                <strong>${upg.name}</strong><br>
-                                <span>${upg.desc}</span>
-                            </div>
-                        `;
+                                            <div class="card succes-obtenu" style="margin:5px; padding:10px;">
+                                                <strong>${upg.name}</strong><br>
+                                                <span>${upg.desc}</span>
+                                            </div>
+                                        `;
                     });
                 }
                 upgradesDiv.style.display = "block";
@@ -1046,6 +1041,3 @@
     </script>
 </body>
 </html>
-
-
-
