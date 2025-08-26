@@ -353,6 +353,7 @@
                 <p>Nombre de clics : <span id="total-clicks">0</span></p>
                 <p>CPS : <span id="total-cps">0</span></p>
                 <p>CPC : <span id="total-cpc">1</span></p>
+                <p>Prestige Bonus : <span id="prestige-bonus">1</span></p>
                 <p>Temps de jeu : <span id="total-time">0s</span></p>
             </div>
 
@@ -362,14 +363,10 @@
             <button class="stats-btn" onclick="showStats('success')">🏆 Succès</button>
             <div id="liste-succes" style="display:none; margin-top:10px; text-align:left;"></div>
 
-            <!-- Ajoute ce bouton dans la section Stats, juste après le bouton Succès -->
             <button class="stats-btn" onclick="showStats('upgrades')">⚙️ Améliorations acquises</button>
             <div id="liste-upgrades" style="display:none; margin-top:10px; text-align:left;"></div>
         </div>
     </div>
-
-
-
 
     <script>
         let credits = 0;
@@ -378,7 +375,6 @@
         let totalClicks = 0;
         let totalPlayTime;
         let lastSessionStart = Date.now();
-
 
         const carsCommunes = [
             { type: "separator", label: "🚗 Communes" },
@@ -487,9 +483,6 @@
             { name: "Ruf CTR3", baseCost: 1_400_000_000_000, cps: 34_000_000_000, count: 0, rang: "mythique", achete: false },
             { name: "Lamborghini SC20", baseCost: 1_700_000_000_000, cps: 40_000_000_000, count: 0, rang: "mythique", achete: false },
         ];
-
-
-
 
         // Fusionner toutes les voitures en un seul tableau
         const cars = [
@@ -601,7 +594,6 @@
             return getCarsByRang(rang).every(car => getGarage().some(v => v.name === car.name));
         }
 
-
         const succes = [
             { nom: "Premier Clic", description: "Clicker 1 fois.", condition: () => totalClicks >= 1, obtenu: false },
             { nom: "Premier Achat", description: "Acheter votre première voiture", condition: () => getGarage().length >= 1, obtenu: false },
@@ -681,8 +673,6 @@
             }
         }
 
-
-
         function saveGame() {
             const elapsedThisSession = Math.floor((Date.now() - lastSessionStart) / 1000);
 
@@ -705,8 +695,6 @@
             };
             localStorage.setItem("hypercarSave", JSON.stringify(saveData));
         }
-
-
 
         function loadGame() {
             const saved = localStorage.getItem("hypercarSave");
@@ -757,11 +745,29 @@
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
 
+        function formatTime(seconds) {
+            const h = Math.floor(seconds / 3600);
+            const m = Math.floor((seconds % 3600) / 60);
+            const s = seconds % 60;
+            return (h > 0 ? `${h}h ` : "") + (m > 0 ? `${m}m ` : "") + `${s}s`;
+        }
+
         function updateCreditsDisplay() {
             cpcdisplay = Math.round(baseClickValue * 100) / 100;
             document.getElementById("credits").innerText = "Crédits : " + formatNumber(credits);
             document.getElementById("cpcDisplay").innerText = "Crédits par clic : " + formatNumber(cpcdisplay);
             document.getElementById("cpsDisplay").innerText = "CPS total : " + formatNumber(totalCPS);
+        }
+
+        function updateStatsDisplay() {
+            document.getElementById("total-clicks").innerText = totalClicks;
+            document.getElementById("total-cps").innerText = formatNumber(totalCPS);
+            document.getElementById("total-cpc").innerText = formatNumber(cpcdisplay);
+
+            const elapsedThisSession = Math.floor((Date.now() - lastSessionStart) / 1000);
+            const total = (totalPlayTime || 0) + elapsedThisSession;
+
+            document.getElementById("total-time").innerText = formatTime(total);
         }
 
         function renderShop() {
@@ -779,13 +785,13 @@
                     const card = document.createElement("div");
                     card.className = "card";
                     card.innerHTML = `
-                                                                    <p>
-                                                                        ${car.name}<br>
-                                                                        💰 ${formatNumber(cost)}<br>
-                                                                        🚗 ${car.count}<br>
-                                                                        ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
-                                                                        ⚡ CPS total : ${formatNumber(car.count * car.cps)}
-                                                                    </p>
+                                <p>
+                                    ${car.name}<br>
+                                    💰 ${formatNumber(cost)}<br>
+                                    🚗 ${car.count}<br>
+                                    ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
+                                    ⚡ CPS total : ${formatNumber(car.count * car.cps)}
+                                </p>
 `;
                     card.onclick = () => {
                         if (credits >= cost) {
@@ -889,26 +895,6 @@
             verifierSucces();
         }
 
-        /*Fonction pour mettre à jour les stats affichées*/
-        function updateStatsDisplay() {
-            document.getElementById("total-clicks").innerText = totalClicks;
-            document.getElementById("total-cps").innerText = formatNumber(totalCPS);
-            document.getElementById("total-cpc").innerText = formatNumber(cpcdisplay);
-
-            const elapsedThisSession = Math.floor((Date.now() - lastSessionStart) / 1000);
-            const total = (totalPlayTime || 0) + elapsedThisSession;
-
-            document.getElementById("total-time").innerText = formatTime(total);
-        }
-
-        function formatTime(seconds) {
-            const h = Math.floor(seconds / 3600);
-            const m = Math.floor((seconds % 3600) / 60);
-            const s = seconds % 60;
-            return (h > 0 ? `${h}h ` : "") + (m > 0 ? `${m}m ` : "") + `${s}s`;
-        }
-
-
         clickArea.addEventListener("click", handleClick);
         clickArea.addEventListener("touchstart", handleClick);
 
@@ -926,7 +912,6 @@
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) saveGame();
         });
-
 
         function openTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
@@ -987,11 +972,11 @@
                 succes.forEach(s => {
                     const classe = s.obtenu ? "succes-obtenu" : "succes-non-obtenu";
                     succesDiv.innerHTML += `
-                                        <div class="card ${classe}" style="margin:5px; padding:10px;">
-                                            <strong>${s.nom}</strong><br>
-                                            <span>${s.description}</span>
-                                        </div>
-                                    `;
+                        <div class="card ${classe}" style="margin:5px; padding:10px;">
+                            <strong>${s.nom}</strong><br>
+                            <span>${s.description}</span>
+                        </div>
+                        `;
                 });
                 succesDiv.style.display = "block";
             }
@@ -1004,11 +989,11 @@
                 } else {
                     upgradesAchetees.forEach(upg => {
                         upgradesDiv.innerHTML += `
-                                            <div class="card succes-obtenu" style="margin:5px; padding:10px;">
-                                                <strong>${upg.name}</strong><br>
-                                                <span>${upg.desc}</span>
-                                            </div>
-                                        `;
+                                    <div class="card succes-obtenu" style="margin:5px; padding:10px;">
+                                        <strong>${upg.name}</strong><br>
+                                        <span>${upg.desc}</span>
+                                    </div>
+                                `;
                     });
                 }
                 upgradesDiv.style.display = "block";
