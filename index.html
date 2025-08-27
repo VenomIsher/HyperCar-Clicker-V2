@@ -292,6 +292,78 @@
                 transform: translateX(-50%) scale(0.8);
             }
         }
+
+        .bonus-popup {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, gold, orange);
+            color: black;
+            font-weight: bold;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+            animation: popupAnim 2s ease forwards;
+            z-index: 9999;
+        }
+
+        @keyframes popupAnim {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, 20px);
+            }
+
+            20% {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+
+            80% {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -20px);
+            }
+        }
+
+        .golden-event {
+            display: inline-block;
+            animation: goldenPulse 1.5s infinite ease-in-out, goldenSpin 5s linear infinite;
+        }
+
+        /* Effet de pulsation (zoom léger) */
+        @keyframes goldenPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        /* Effet de rotation continue */
+        @keyframes goldenSpin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .highlight-boost {
+            color: gold !important;
+            font-weight: bold;
+            text-shadow: 0 0 5px gold;
+        }
+
     </style>
 </head>
 <body>
@@ -374,6 +446,9 @@
         let totalClicks = 0;
         let totalPlayTime;
         let lastSessionStart = Date.now();
+        let goldenEventActive = false;
+        let goldenEventTimer;
+
 
         const carsCommunes = [
             { type: "separator", label: "🚗 Communes" },
@@ -784,13 +859,13 @@
                     const card = document.createElement("div");
                     card.className = "card";
                     card.innerHTML = `
-                                <p>
-                                    ${car.name}<br>
-                                    💰 ${formatNumber(cost)}<br>
-                                    🚗 ${car.count}<br>
-                                    ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
-                                    ⚡ CPS total : ${formatNumber(car.count * car.cps)}
-                                </p>
+                                    <p>
+                                        ${car.name}<br>
+                                        💰 ${formatNumber(cost)}<br>
+                                        🚗 ${car.count}<br>
+                                        ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
+                                        ⚡ CPS total : ${formatNumber(car.count * car.cps)}
+                                    </p>
 `;
                     card.onclick = () => {
                         if (credits >= cost) {
@@ -800,7 +875,7 @@
 
                             // 🎯 Bonus spécial pour la Porsche Cayman
                             if (car.name === "Fiat 500 Abarth") {
-                                baseClickValue += car.count / 10;
+                                baseClickValue += car.count / 20;
                             }
 
                             updateCreditsDisplay();
@@ -971,11 +1046,11 @@
                 succes.forEach(s => {
                     const classe = s.obtenu ? "succes-obtenu" : "succes-non-obtenu";
                     succesDiv.innerHTML += `
-                        <div class="card ${classe}" style="margin:5px; padding:10px;">
-                            <strong>${s.nom}</strong><br>
-                            <span>${s.description}</span>
-                        </div>
-                        `;
+                                                <div class="card ${classe}" style="margin:5px; padding:10px;">
+                                                    <strong>${s.nom}</strong><br>
+                                                    <span>${s.description}</span>
+                                                </div>
+                                                `;
                 });
                 succesDiv.style.display = "block";
             }
@@ -988,11 +1063,11 @@
                 } else {
                     upgradesAchetees.forEach(upg => {
                         upgradesDiv.innerHTML += `
-                                    <div class="card succes-obtenu" style="margin:5px; padding:10px;">
-                                        <strong>${upg.name}</strong><br>
-                                        <span>${upg.desc}</span>
-                                    </div>
-                                `;
+                                                            <div class="card succes-obtenu" style="margin:5px; padding:10px;">
+                                                                <strong>${upg.name}</strong><br>
+                                                                <span>${upg.desc}</span>
+                                                            </div>
+                                                        `;
                     });
                 }
                 upgradesDiv.style.display = "block";
@@ -1017,13 +1092,106 @@
             setTimeout(() => popup.remove(), 2200);
         }
 
+        function spawnGoldenEvent() {
+            if (goldenEventActive) return; // éviter doublons
+
+            goldenEventActive = true;
+
+            // créer un élément visuel (ex: logo hypercar doré)
+            const event = document.createElement("div");
+            event.id = "goldenEvent";
+            event.innerText = "🛞"; // Icône temporaire
+            event.style.position = "absolute";
+
+            // Limiter la zone d’apparition
+            const headerHeight = 100; // hauteur de ton header en px
+            const availableHeight = window.innerHeight - headerHeight - 100; // marge en bas de 100px
+            const top = headerHeight + Math.random() * availableHeight;
+
+            const left = Math.random() * (window.innerWidth - 100); // éviter hors écran
+
+            event.style.top = top + "px";
+            event.style.left = left + "px";
+            event.style.fontSize = "3rem";
+            event.style.cursor = "pointer";
+
+            event.style.top = Math.random() * 80 + "%";
+            event.style.left = Math.random() * 80 + "%";
+            event.style.fontSize = "3rem";
+            event.style.cursor = "pointer";
+            event.classList.add("golden-event");
+
+            document.body.appendChild(event);
+
+            // click = bonus
+            event.addEventListener("click", () => {
+                applyGoldenBonus();
+                document.body.removeChild(event);
+                goldenEventActive = false;
+                scheduleNextGolden(); // relance prochaine apparition
+            });
+            
+            // disparition après 10s
+            setTimeout(() => {
+                if (document.body.contains(event)) {
+                    document.body.removeChild(event);
+                    goldenEventActive = false;
+                    scheduleNextGolden();
+                }
+            }, 10000);
+        }
+
+        function applyGoldenBonus() {
+            const rand = Math.random();
+            if (rand < 0.3) {
+                credits += Math.floor(credits * 0.05);
+                showBonusPopup("💰 +5% crédits !");
+            } else if (rand < 0.6) {
+                baseClickValue *= 2;
+                document.getElementById("cpcDisplay").classList.add("highlight-boost");
+                setTimeout(() => {
+                    baseClickValue /= 2;
+                    document.getElementById("cpcDisplay").classList.remove("highlight-boost");
+                }, 30000);
+                showBonusPopup("🖱️ CPC doublé (30s) !");
+            } else if (rand < 0.9) {
+                totalCPS *= 2;
+                document.getElementById("cpsDisplay").classList.add("highlight-boost");
+                setTimeout(() => {
+                    totalCPS /= 2;
+                    document.getElementById("cpsDisplay").classList.remove("highlight-boost");
+                }, 30000);
+                showBonusPopup("⚡ CPS doublé (30s) !");
+            } else {
+                credits += 1000000;
+                showBonusPopup("👑 Jackpot +1M crédits !");
+            }
+        }
+
+        function scheduleNextGolden() {
+            const delay = (30 + Math.random() * 90) * 1000; // entre 30 et 120s
+            setTimeout(spawnGoldenEvent, delay);
+        }
+
+        function showBonusPopup(message) {
+            const popup = document.createElement("div");
+            popup.className = "bonus-popup";
+            popup.innerText = message;
+            document.body.appendChild(popup);
+
+            // disparition douce
+            setTimeout(() => popup.remove(), 2200);
+        }
+
+
+        // Lancer le premier
+        scheduleNextGolden();
         loadGame();
         renderShop();
         updateCreditsDisplay();
         updateStatsDisplay();
         setInterval(updateStatsDisplay, 1000);
+        setInterval(verifierSucces, 5000);
     </script>
 </body>
 </html>
-
-
