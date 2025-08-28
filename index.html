@@ -424,6 +424,7 @@
                 <p>Nombre de clics : <span id="total-clicks">0</span></p>
                 <p>CPS : <span id="total-cps">0</span></p>
                 <p>CPC : <span id="total-cpc">1</span></p>
+                <p>Nombre de roues cliquées : <span id = "nbGoldenWheelClicked">0</span></p>
                 <p>Temps de jeu : <span id="total-time">0s</span></p>
             </div>
 
@@ -447,6 +448,7 @@
         let lastSessionStart = Date.now();
         let goldenEventActive = false;
         let goldenEventTimer;
+        let nbGoldenWheelClicked = 0;
 
 
         const carsCommunes = [
@@ -836,6 +838,7 @@
             document.getElementById("total-clicks").innerText = totalClicks;
             document.getElementById("total-cps").innerText = formatNumber(totalCPS);
             document.getElementById("total-cpc").innerText = formatNumber(cpcdisplay);
+            document.getElementById("nbGoldenWheelClicked").innerText = formatNumber(nbGoldenWheelClicked);
 
             const elapsedThisSession = Math.floor((Date.now() - lastSessionStart) / 1000);
             const total = (totalPlayTime || 0) + elapsedThisSession;
@@ -858,13 +861,13 @@
                     const card = document.createElement("div");
                     card.className = "card";
                     card.innerHTML = `
-                                        <p>
-                                            ${car.name}<br>
-                                            💰 ${formatNumber(cost)}<br>
-                                            🚗 ${car.count}<br>
-                                            ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
-                                            ⚡ CPS total : ${formatNumber(car.count * car.cps)}
-                                        </p>
+                                                                        <p>
+                                                                            ${car.name}<br>
+                                                                            💰 ${formatNumber(cost)}<br>
+                                                                            🚗 ${car.count}<br>
+                                                                            ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
+                                                                            ⚡ CPS total : ${formatNumber(car.count * car.cps)}
+                                                                        </p>
 `;
                     card.onclick = () => {
                         if (credits >= cost) {
@@ -1045,11 +1048,11 @@
                 succes.forEach(s => {
                     const classe = s.obtenu ? "succes-obtenu" : "succes-non-obtenu";
                     succesDiv.innerHTML += `
-                                                    <div class="card ${classe}" style="margin:5px; padding:10px;">
-                                                        <strong>${s.nom}</strong><br>
-                                                        <span>${s.description}</span>
-                                                    </div>
-                                                    `;
+                                                                                    <div class="card ${classe}" style="margin:5px; padding:10px;">
+                                                                                        <strong>${s.nom}</strong><br>
+                                                                                        <span>${s.description}</span>
+                                                                                    </div>
+                                                                                    `;
                 });
                 succesDiv.style.display = "block";
             }
@@ -1062,11 +1065,11 @@
                 } else {
                     upgradesAchetees.forEach(upg => {
                         upgradesDiv.innerHTML += `
-                                                                <div class="card succes-obtenu" style="margin:5px; padding:10px;">
-                                                                    <strong>${upg.name}</strong><br>
-                                                                    <span>${upg.desc}</span>
-                                                                </div>
-                                                            `;
+                                                                                                <div class="card succes-obtenu" style="margin:5px; padding:10px;">
+                                                                                                    <strong>${upg.name}</strong><br>
+                                                                                                    <span>${upg.desc}</span>
+                                                                                                </div>
+                                                                                            `;
                     });
                 }
                 upgradesDiv.style.display = "block";
@@ -1145,6 +1148,7 @@
             if (rand < 0.3) {
                 credits += Math.floor(credits * 0.05);
                 showBonusPopup("💰 +5% crédits !");
+                nbGoldenWheelClicked++;
             } else if (rand < 0.6) {
                 baseClickValue *= 2;
                 document.getElementById("cpcDisplay").classList.add("highlight-boost");
@@ -1153,6 +1157,7 @@
                     document.getElementById("cpcDisplay").classList.remove("highlight-boost");
                 }, 30000);
                 showBonusPopup("🖱️ CPC doublé (30s) !");
+                nbGoldenWheelClicked++;
             } else if (rand < 0.95) {
                 totalCPS *= 2;
                 document.getElementById("cpsDisplay").classList.add("highlight-boost");
@@ -1161,9 +1166,11 @@
                     document.getElementById("cpsDisplay").classList.remove("highlight-boost");
                 }, 30000);
                 showBonusPopup("⚡ CPS doublé (30s) !");
+                nbGoldenWheelClicked++;
             } else {
                 credits += 1000000;
                 showBonusPopup("👑 Jackpot +1M crédits !");
+                nbGoldenWheelClicked++;
             }
         }
 
@@ -1185,7 +1192,7 @@
 
         // Lancer le premier
         scheduleNextGolden();
-        
+
         loadGame();
         renderShop();
         updateCreditsDisplay();
