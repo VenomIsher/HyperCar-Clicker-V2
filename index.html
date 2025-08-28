@@ -424,7 +424,8 @@
                 <p>Nombre de clics : <span id="total-clicks">0</span></p>
                 <p>CPS : <span id="total-cps">0</span></p>
                 <p>CPC : <span id="total-cpc">1</span></p>
-                <p>Nombre de roues cliquées : <span id = "nbGoldenWheelClicked">0</span></p>
+                <p>Nombre de roues cliquées : <span id="nbGoldenWheelClicked">0</span></p>
+                <p>Nombre de voitures dans le garage : <span id="totalCarsOwned">0</span></p>
                 <p>Temps de jeu : <span id="total-time">0s</span></p>
             </div>
 
@@ -449,6 +450,7 @@
         let goldenEventActive = false;
         let goldenEventTimer;
         let nbGoldenWheelClicked = 0;
+        let totalCarsOwned = 0;
 
 
         const carsCommunes = [
@@ -723,6 +725,7 @@
                 totalPlayTime = 0;
                 lastSessionStart = Date.now();
                 nbGoldenWheelClicked = 0;
+                totalCarsOwned = 0;
 
                 // Réinitialiser les voitures
                 [...carsCommunes, ...carsRares, ...carsEpique, ...carsLegendaire, ...carsMythique].forEach(c => {
@@ -768,6 +771,7 @@
                 totalPlayTime: (totalPlayTime || 0) + elapsedThisSession,
                 succes: succes.map(s => ({ obtenu: !!s.obtenu })),
                 nbGoldenWheelClicked: nbGoldenWheelClicked,
+                totalCarsOwned,
 
             };
             localStorage.setItem("hypercarSave", JSON.stringify(saveData));
@@ -793,6 +797,7 @@
             totalClicks = data.totalClicks || 0;
             lastSessionStart = Date.now();
             nbGoldenWheelClicked = data.nbGoldenWheelClicked || 0;
+            totalCarsOwned = data.totalCarsOwned || 0;
 
             // 🔥 Restaurer chaque tableau séparément
             if (data.carsCommunes) data.carsCommunes.forEach((c, i) => { if (carsCommunes[i]) carsCommunes[i].count = c.count || 0; });
@@ -842,6 +847,7 @@
             document.getElementById("total-cps").innerText = formatNumber(totalCPS);
             document.getElementById("total-cpc").innerText = formatNumber(cpcdisplay);
             document.getElementById("nbGoldenWheelClicked").innerText = formatNumber(nbGoldenWheelClicked);
+            document.getElementById("totalCarsOwned").innerText = formatNumber(totalCarsOwned);
 
             const elapsedThisSession = Math.floor((Date.now() - lastSessionStart) / 1000);
             const total = (totalPlayTime || 0) + elapsedThisSession;
@@ -864,19 +870,20 @@
                     const card = document.createElement("div");
                     card.className = "card";
                     card.innerHTML = `
-                                                                                    <p>
-                                                                                        ${car.name}<br>
-                                                                                        💰 ${formatNumber(cost)}<br>
-                                                                                        🚗 ${car.count}<br>
-                                                                                        ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
-                                                                                        ⚡ CPS total : ${formatNumber(car.count * car.cps)}
-                                                                                    </p>
+                                                                                                            <p>
+                                                                                                                ${car.name}<br>
+                                                                                                                💰 ${formatNumber(cost)}<br>
+                                                                                                                🚗 ${car.count}<br>
+                                                                                                                ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
+                                                                                                                ⚡ CPS total : ${formatNumber(car.count * car.cps)}
+                                                                                                            </p>
 `;
                     card.onclick = () => {
                         if (credits >= cost) {
                             credits -= cost;
                             car.count++;
                             totalCPS += car.cps;
+                            totalCarsOwned++;
 
                             // 🎯 Bonus spécial pour la Porsche Cayman
                             if (car.name === "Fiat 500 Abarth") {
@@ -1051,11 +1058,11 @@
                 succes.forEach(s => {
                     const classe = s.obtenu ? "succes-obtenu" : "succes-non-obtenu";
                     succesDiv.innerHTML += `
-                                                                                                <div class="card ${classe}" style="margin:5px; padding:10px;">
-                                                                                                    <strong>${s.nom}</strong><br>
-                                                                                                    <span>${s.description}</span>
-                                                                                                </div>
-                                                                                                `;
+                                                                                                                        <div class="card ${classe}" style="margin:5px; padding:10px;">
+                                                                                                                            <strong>${s.nom}</strong><br>
+                                                                                                                            <span>${s.description}</span>
+                                                                                                                        </div>
+                                                                                                                        `;
                 });
                 succesDiv.style.display = "block";
             }
@@ -1068,11 +1075,11 @@
                 } else {
                     upgradesAchetees.forEach(upg => {
                         upgradesDiv.innerHTML += `
-                                                                                                            <div class="card succes-obtenu" style="margin:5px; padding:10px;">
-                                                                                                                <strong>${upg.name}</strong><br>
-                                                                                                                <span>${upg.desc}</span>
-                                                                                                            </div>
-                                                                                                        `;
+                                                                                                                                    <div class="card succes-obtenu" style="margin:5px; padding:10px;">
+                                                                                                                                        <strong>${upg.name}</strong><br>
+                                                                                                                                        <span>${upg.desc}</span>
+                                                                                                                                    </div>
+                                                                                                                                `;
                     });
                 }
                 upgradesDiv.style.display = "block";
