@@ -363,7 +363,6 @@
             font-weight: bold;
             text-shadow: 0 0 5px gold;
         }
-
     </style>
 </head>
 <body>
@@ -808,7 +807,7 @@
         }
 
         function formatNumber(num) {
-            num = Math.floor(num);
+            num = Math.trunc(num);
             if (num >= 1e21) return (num / 1e21).toFixed(1).replace(/\.0$/, "") + "Sx";
             if (num >= 1e18) return (num / 1e18).toFixed(1).replace(/\.0$/, "") + "Qi";
             if (num >= 1e15) return (num / 1e15).toFixed(1).replace(/\.0$/, "") + "Q";
@@ -827,7 +826,7 @@
         }
 
         function updateCreditsDisplay() {
-            cpcdisplay = Math.round(baseClickValue * 100) / 100;
+            cpcdisplay = Math.trunc(baseClickValue * 100) / 100;
             document.getElementById("credits").innerText = "Crédits : " + formatNumber(credits);
             document.getElementById("cpcDisplay").innerText = "Crédits par clic : " + formatNumber(cpcdisplay);
             document.getElementById("cpsDisplay").innerText = "CPS total : " + formatNumber(totalCPS);
@@ -859,13 +858,13 @@
                     const card = document.createElement("div");
                     card.className = "card";
                     card.innerHTML = `
-                                    <p>
-                                        ${car.name}<br>
-                                        💰 ${formatNumber(cost)}<br>
-                                        🚗 ${car.count}<br>
-                                        ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
-                                        ⚡ CPS total : ${formatNumber(car.count * car.cps)}
-                                    </p>
+                                        <p>
+                                            ${car.name}<br>
+                                            💰 ${formatNumber(cost)}<br>
+                                            🚗 ${car.count}<br>
+                                            ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
+                                            ⚡ CPS total : ${formatNumber(car.count * car.cps)}
+                                        </p>
 `;
                     card.onclick = () => {
                         if (credits >= cost) {
@@ -978,8 +977,8 @@
             updateCreditsDisplay();
         }, 1000);
 
-        // Sauvegarde auto toutes les 15s
-        setInterval(saveGame, 15000);
+        // Sauvegarde auto toutes les 10s
+        setInterval(saveGame, 10000);
 
         // Sauvegarde à la fermeture / changement d’onglet
         window.addEventListener('beforeunload', saveGame);
@@ -1046,11 +1045,11 @@
                 succes.forEach(s => {
                     const classe = s.obtenu ? "succes-obtenu" : "succes-non-obtenu";
                     succesDiv.innerHTML += `
-                                                <div class="card ${classe}" style="margin:5px; padding:10px;">
-                                                    <strong>${s.nom}</strong><br>
-                                                    <span>${s.description}</span>
-                                                </div>
-                                                `;
+                                                    <div class="card ${classe}" style="margin:5px; padding:10px;">
+                                                        <strong>${s.nom}</strong><br>
+                                                        <span>${s.description}</span>
+                                                    </div>
+                                                    `;
                 });
                 succesDiv.style.display = "block";
             }
@@ -1063,11 +1062,11 @@
                 } else {
                     upgradesAchetees.forEach(upg => {
                         upgradesDiv.innerHTML += `
-                                                            <div class="card succes-obtenu" style="margin:5px; padding:10px;">
-                                                                <strong>${upg.name}</strong><br>
-                                                                <span>${upg.desc}</span>
-                                                            </div>
-                                                        `;
+                                                                <div class="card succes-obtenu" style="margin:5px; padding:10px;">
+                                                                    <strong>${upg.name}</strong><br>
+                                                                    <span>${upg.desc}</span>
+                                                                </div>
+                                                            `;
                     });
                 }
                 upgradesDiv.style.display = "block";
@@ -1110,8 +1109,8 @@
 
             const left = Math.random() * (window.innerWidth - 100); // éviter hors écran
 
-            event.style.top = top + "px";
-            event.style.left = left + "px";
+            //event.style.top = top + "px";
+            //event.style.left = left + "px";
             event.style.fontSize = "3rem";
             event.style.cursor = "pointer";
 
@@ -1130,7 +1129,7 @@
                 goldenEventActive = false;
                 scheduleNextGolden(); // relance prochaine apparition
             });
-            
+
             // disparition après 10s
             setTimeout(() => {
                 if (document.body.contains(event)) {
@@ -1154,7 +1153,7 @@
                     document.getElementById("cpcDisplay").classList.remove("highlight-boost");
                 }, 30000);
                 showBonusPopup("🖱️ CPC doublé (30s) !");
-            } else if (rand < 0.9) {
+            } else if (rand < 0.95) {
                 totalCPS *= 2;
                 document.getElementById("cpsDisplay").classList.add("highlight-boost");
                 setTimeout(() => {
@@ -1186,6 +1185,7 @@
 
         // Lancer le premier
         scheduleNextGolden();
+        
         loadGame();
         renderShop();
         updateCreditsDisplay();
@@ -1195,4 +1195,3 @@
     </script>
 </body>
 </html>
-
