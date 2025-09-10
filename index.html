@@ -377,6 +377,7 @@
             <button class="tab-button" onclick="openTab('main')">🏁 Principal</button>
             <button class="tab-button" onclick="openTab('carsTab')">🏎️ Voitures</button>
             <button class="tab-button" onclick="openTab('upgradesTab')">⚙️ Améliorations</button>
+
             <button class="tab-button" onclick="openTab('tracksTab')">🏟️ Circuits</button>
             <button class="tab-button" onclick="openTab('statsTab')"> 📊 Stats</button>
             <button class="tab-button" onclick="openTab('settingsTab')"> ⚙️ Parametres</button>
@@ -437,6 +438,7 @@
 
             <button class="stats-btn" onclick="showStats('upgrades')">⚙️ Améliorations acquises</button>
             <div id="liste-upgrades" style="display:none; margin-top:10px; text-align:left;"></div>
+
         </div>
     </div>
 
@@ -451,7 +453,6 @@
         let goldenEventTimer;
         let nbGoldenWheelClicked = 0;
         let totalCarsOwned = 0;
-
 
         const carsCommunes = [
             { type: "separator", label: "🚗 Communes" },
@@ -870,13 +871,13 @@
                     const card = document.createElement("div");
                     card.className = "card";
                     card.innerHTML = `
-                                                                                                            <p>
-                                                                                                                ${car.name}<br>
-                                                                                                                💰 ${formatNumber(cost)}<br>
-                                                                                                                🚗 ${car.count}<br>
-                                                                                                                ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
-                                                                                                                ⚡ CPS total : ${formatNumber(car.count * car.cps)}
-                                                                                                            </p>
+                                                            <p>
+                                                                ${car.name}<br>
+                                                                💰 ${formatNumber(cost)}<br>
+                                                                🚗 ${car.count}<br>
+                                                                ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
+                                                                ⚡ CPS total : ${formatNumber(car.count * car.cps)}
+                                                            </p>
 `;
                     card.onclick = () => {
                         if (credits >= cost) {
@@ -1058,11 +1059,11 @@
                 succes.forEach(s => {
                     const classe = s.obtenu ? "succes-obtenu" : "succes-non-obtenu";
                     succesDiv.innerHTML += `
-                                                                                                                        <div class="card ${classe}" style="margin:5px; padding:10px;">
-                                                                                                                            <strong>${s.nom}</strong><br>
-                                                                                                                            <span>${s.description}</span>
-                                                                                                                        </div>
-                                                                                                                        `;
+                                                            <div class="card ${classe}" style="margin:5px; padding:10px;">
+                                                                <strong>${s.nom}</strong><br>
+                                                                <span>${s.description}</span>
+                                                            </div>
+                                                            `;
                 });
                 succesDiv.style.display = "block";
             }
@@ -1075,11 +1076,11 @@
                 } else {
                     upgradesAchetees.forEach(upg => {
                         upgradesDiv.innerHTML += `
-                                                                                                                                    <div class="card succes-obtenu" style="margin:5px; padding:10px;">
-                                                                                                                                        <strong>${upg.name}</strong><br>
-                                                                                                                                        <span>${upg.desc}</span>
-                                                                                                                                    </div>
-                                                                                                                                `;
+                                                                                                                                                                                                                        <div class="card succes-obtenu" style="margin:5px; padding:10px;">
+                                                                                                                                                                                                                            <strong>${upg.name}</strong><br>
+                                                                                                                                                                                                                            <span>${upg.desc}</span>
+                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                    `;
                     });
                 }
                 upgradesDiv.style.display = "block";
@@ -1199,7 +1200,6 @@
             setTimeout(() => popup.remove(), 2200);
         }
 
-
         // Lancer le premier
         scheduleNextGolden();
 
@@ -1208,8 +1208,8 @@
         updateCreditsDisplay();
         updateStatsDisplay();
         setInterval(updateStatsDisplay, 1000);
-        setInterval(verifierSucces, 5000);
+        setInterval(verifierSucces, 1000);
+
     </script>
 </body>
 </html>
-
