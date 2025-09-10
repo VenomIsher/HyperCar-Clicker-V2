@@ -453,6 +453,8 @@
         let goldenEventTimer;
         let nbGoldenWheelClicked = 0;
         let totalCarsOwned = 0;
+        let goldenBoostTimers = [];
+
 
         const carsCommunes = [
             { type: "separator", label: "🚗 Communes" },
@@ -717,6 +719,18 @@
             if (confirm("⚠️ Voulez-vous vraiment réinitialiser votre partie ?")) {
                 // Supprimer la sauvegarde
                 localStorage.removeItem("hypercarSave");
+
+                // ✅ Réinitialiser les boosts dorés actifs
+                baseClickValue = 1; // remet le CPC de base
+                totalCPS = 0;       // remet le CPS de base
+                document.getElementById("cpcDisplay").classList.remove("highlight-boost");
+                document.getElementById("cpsDisplay").classList.remove("highlight-boost");
+
+                // Si tu veux aussi stopper les timers boost
+                if (window.goldenBoostTimers) {
+                    goldenBoostTimers.forEach(t => clearTimeout(t));
+                    goldenBoostTimers = [];
+                }
 
                 // Réinitialiser toutes les variables
                 credits = 0;
@@ -1138,7 +1152,7 @@
 
             // click = bonus
             event.addEventListener("click", () => {
-                applyGoldenBonus();
+                enableGoldenBonus();
                 document.body.removeChild(event);
                 goldenEventActive = false;
                 scheduleNextGolden(); // relance prochaine apparition
@@ -1154,7 +1168,7 @@
             }, 10000);
         }
 
-        function applyGoldenBonus() {
+        function enableGoldenBonus() {
             const rand = Math.random();
             if (rand < 0.3) {
                 credits += Math.floor(credits * 0.05);
@@ -1163,7 +1177,7 @@
             } else if (rand < 0.6) {
                 baseClickValue *= 2;
                 document.getElementById("cpcDisplay").classList.add("highlight-boost");
-                setTimeout(() => {
+                let t = setTimeout(() => {
                     baseClickValue /= 2;
                     document.getElementById("cpcDisplay").classList.remove("highlight-boost");
                 }, 30000);
@@ -1172,7 +1186,7 @@
             } else if (rand < 0.95) {
                 totalCPS *= 2;
                 document.getElementById("cpsDisplay").classList.add("highlight-boost");
-                setTimeout(() => {
+                let t = setTimeout(() => {
                     totalCPS /= 2;
                     document.getElementById("cpsDisplay").classList.remove("highlight-boost");
                 }, 30000);
@@ -1202,7 +1216,6 @@
 
         // Lancer le premier
         scheduleNextGolden();
-
         loadGame();
         renderShop();
         updateCreditsDisplay();
