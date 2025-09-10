@@ -375,9 +375,9 @@
 
         <div class="tabs">
             <button class="tab-button" onclick="openTab('main')">🏁 Principal</button>
-            <button class="tab-button" onclick="openTab('carsTab')">🏎️ Voitures</button>
+            <button class="tab-button" onclick="openTab('carsTab')">🚗 Voitures</button>
             <button class="tab-button" onclick="openTab('upgradesTab')">⚙️ Améliorations</button>
-
+            <button class="tab-button" onclick="openTab('DriversTab')">🏎️ Pilotes</button>
             <button class="tab-button" onclick="openTab('tracksTab')">🏟️ Circuits</button>
             <button class="tab-button" onclick="openTab('statsTab')"> 📊 Stats</button>
             <button class="tab-button" onclick="openTab('settingsTab')"> ⚙️ Parametres</button>
@@ -399,6 +399,13 @@
         <div class="section">
             <h2>Améliorations</h2>
             <div id="upgrades"></div>
+        </div>
+    </div>
+
+    <div id="DriversTab" class="tab-content">
+        <div class="section">
+            <h2>Pilotes</h2>
+            <div id="drivers"></div>
         </div>
     </div>
 
@@ -580,7 +587,6 @@
         const upgrades = [
             { name: "Turbo niv.1 👆", cost: 100, effect: () => { baseClickValue *= 1.2; }, desc: "Un petit coup de boost au démarrage" },
             { name: "Turbo niv.2 👆", cost: 500, effect: () => { baseClickValue *= 1.2; }, desc: "Encore plus de punch dans vos clics" },
-            { name: "Pilote Amateur 🏎️", cost: 650, effect: () => { totalCPS += Math.floor(totalCPS * 0.05); }, desc: "Un pilote motivé pour booster vos gains" },
             { name: "Transmission sportive ⚙️", cost: 1000, effect: () => { baseClickValue *= 1.25; }, desc: "Une transmission qui réagit vite" },
             { name: "Systeme Nitro ⚡", cost: 1200, effect: () => { totalCPS += Math.floor(totalCPS * 0.05); }, desc: "Un petit coup de nitro bien placé" },
             { name: "Freinage optimisé 🛑", cost: 1500, effect: () => { baseClickValue *= 1.2; }, desc: "Freinez mieux pour accélérer ensuite" },
@@ -589,7 +595,6 @@
             { name: "DRS ⚙️", cost: 3000, effect: () => { totalCPS += Math.floor(totalCPS * 0.05); }, desc: "Ailes ajustées pour glisser plus vite" },
             { name: "Turbo niv.4 👆", cost: 4000, effect: () => { baseClickValue *= 1.35; }, desc: "Turbo puissant pour aller plus loin" },
             { name: "Moteur Allégé ⚙️", cost: 5000, effect: () => { totalCPS += Math.floor(totalCPS * 0.05); }, desc: "Un moteur léger pour plus de réactivité" },
-            { name: "Pilote Pro 🏎️", cost: 5000, effect: () => { baseClickValue *= 1.25; }, desc: "Un vrai pro aux commandes" },
             { name: "Freinage Dégréssif 🛑", cost: 10000, effect: () => { totalCPS += Math.floor(totalCPS * 0.05); }, desc: "Freinage progressif pour mieux contrôler" },
             { name: "Pit-stop rapide 🏁", cost: 10000, effect: () => { baseClickValue *= 1.3; }, desc: "Arrêts aux stands efficaces" },
             { name: "Publicité 📺", cost: 12000, effect: () => { totalCPS += Math.floor(totalCPS * 0.05); }, desc: "Faites parler de vous partout" },
@@ -597,7 +602,6 @@
             { name: "Aero Actif 🏎️", cost: 15000, effect: () => { totalCPS += Math.floor(totalCPS * 0.05); }, desc: "Aérodynamique qui booste la vitesse" },
             { name: "Infos Ingé 🎙️", cost: 15000, effect: () => { baseClickValue *= 1.35; }, desc: "Conseils ingénieux pour avancer" },
             { name: "ERS ⚡", cost: 35000, effect: () => { totalCPS += Math.floor(totalCPS * 0.05); }, desc: "Énergie récupérée pour un coup de pouce" },
-            { name: "Pilote Légendaire 🏎️", cost: 40000, effect: () => { baseClickValue *= 1.4; }, desc: "Une légende pour inspirer vos gains" },
             { name: "Pneus Hard 🛞", cost: 40000, effect: () => { totalCPS += Math.floor(totalCPS * 0.05); }, desc: "Pneus résistants pour plus de stabilité" },
             { name: "Pneus Medium 🛞", cost: 40000, effect: () => { baseClickValue *= 1.35; }, desc: "Pneus équilibrés pour la performance" },
             { name: "Chassi Aluminium 🚗", cost: 45000, effect: () => { totalCPS += Math.floor(totalCPS * 0.05); }, desc: "Un châssis léger et solide" },
@@ -610,17 +614,30 @@
             { name: "Carrosserie Titane 🛡️", cost: 250000, effect: () => { baseClickValue *= 1.6; }, desc: "Une carrosserie ultra légère pour des clics plus rentables" },
             { name: "Equipe d'Ingénieurs 👨‍🔧", cost: 500000, effect: () => { totalCPS += Math.floor(totalCPS * 0.10); }, desc: "Des experts pour optimiser tous vos revenus" },
             { name: "ECU 💻", cost: 1200000, effect: () => { baseClickValue *= 1.8; }, desc: "Informatique optimisé pour chaque action pour des clics surpuissants" },
-            { name: "Max Verstappen 🏎️", cost: 3300000, effect: () => { totalCPS += Math.floor(totalCPS * 0.10); }, desc: "Un pilote rapide et précis" },
             { name: "Usine automatisée 🏭", cost: 5000000, effect: () => { totalCPS += Math.floor(totalCPS * 0.10); }, desc: "Production automatisée pour des revenus passifs doublés" },
             { name: "ConceptCar 🚀", cost: 20000000, effect: () => { baseClickValue *= 2; }, desc: "Un concept révolutionnaire qui multiplie vos clics" },
-            { name: "Ayrton Senna 🏎️", cost: 27000000, effect: () => { baseClickValue *= 1.6; }, desc: "Une légende du volant pour vous guider" },
             { name: "Recherches Avancées 🧪", cost: 500000000, effect: () => { baseClickValue *= 2.5; }, desc: "Des innovations pour des clics phénoménaux" },
             { name: "Partenariat mondial 🌍", cost: 2000000000, effect: () => { totalCPS += Math.floor(totalCPS * 0.15); }, desc: "Un réseau international pour tripler vos revenus passifs" },
-            { name: "Lewis Hamilton 🏎️", cost: 4400000000, effect: () => { totalCPS += Math.floor(totalCPS * 0.15); }, desc: "Un champion pour maximiser vos gains" },
         ];
 
         function getAmeliorations() {
             return upgrades.filter(u => u.bought);
+        }
+
+        const drivers = [
+            { name: "Juan Manuel Fangio", cost: 10_000_000, effect: () => { baseClickValue *= 1.6; }},
+            { name: "Fernando Alonso", cost: 14_000_000, effect: () => { baseClickValue *= 1.6; }},
+            { name: "Allain Prost", cost: 20_000_000, effect: () => { baseClickValue *= 1.6; }},
+            { name: "Niki Lauda", cost: 30_000_000, effect: () => { baseClickValue *= 1.6; }},
+            { name: "Max Verstappen", cost: 33_000_000, effect: () => { baseClickValue *= 1.6; }},
+            { name: "Sebastian Vettel", cost: 50_000_000, effect: () => { baseClickValue *= 1.6; }},
+            { name: "Michael Schumacher", cost: 100_000_000, effect: () => { baseClickValue *= 1.6; }},
+            { name: "Ayrton Senna", cost: 120_000_000, effect: () => { baseClickValue *= 1.6; }},
+            { name: "Lewis Hamilton", cost: 44_000_000_000, effect: () => { baseClickValue *= 1.6; }},
+        ]
+
+        function getDrivers() {
+            return drivers.filter(d => d.bought);
         }
 
         const tracks = [
@@ -699,7 +716,6 @@
             { nom: "Légende Vivante", description: "Acheter une voiture légendaire", condition: () => getGarage().some(v => v.rang === "légendaire"), obtenu: false },
             { nom: "Mythe Automobile", description: "Acheter une voiture mythique", condition: () => getGarage().some(v => v.rang === "mythique"), obtenu: false },
             { nom: "Garage Universel", description: "Posséder une voiture de chaque catégorie", condition: () => ["commune", "rare", "épique", "légendaire", "mythique"].every(rang => getGarage().some(v => v.rang === rang)), obtenu: false },
-            { nom: "L'Enfer Vert", description: "Acheter le circuit du Nurbürgring", condition: () => getCircuits().some(v => v.name === "Nurbürgring Nordschleife"), obtenu: false },
             { nom: "Les 24 Heures", description: "Acheter le circuit du Mans", condition: () => getCircuits().some(v => v.name === "Le Mans"), obtenu: false },
             { nom: "Collection Commune", description: "Obtenir toutes les voitures communes", condition: () => hasAllCarsOfRang("commune"), obtenu: false },
             { nom: "Collection Rare", description: "Obtenir toutes les voitures rares", condition: () => hasAllCarsOfRang("rare"), obtenu: false },
@@ -711,8 +727,11 @@
             { nom: "Au Complet", description: "Acheter toutes les voitures", condition: () => cars.filter(c => !c.type).every(c => c.count > 0), obtenu: false },
             { nom: "Strict Nécessaire", description: "Acheter toutes les améliorations", condition: () => upgrades.every(u => u.bought), obtenu: false },
             { nom: "Tour du Monde", description: "Acheter tous les circuits", condition: () => tracks.every(t => t.bought), obtenu: false },
-            { nom: "Tu Tu Tu Du", description: "Simply Lovely", condition: () => getAmeliorations().some(v => v.name === "Max Verstappen 🏎️"), obtenu: false },
-            { nom: "Sir Lewis Hamilton", description: "through goes hamilton", condition: () => getAmeliorations().some(v => v.name === "Lewis Hamilton 🏎️"), obtenu: false },
+            { nom: "L'Enfer Vert", description: "Acheter le circuit du Nurbürgring", condition: () => getCircuits().some(v => v.name === "Nurbürgring Nordschleife"), obtenu: false },
+            { nom: "Tu Tu Tu Du", description: "Simply Lovely", condition: () => getDrivers().some(d => d.name === "Max Verstappen"), obtenu: false },
+            { nom: "Equipe de Choc", description: "Recruter tous les pilotes", condition: () => drivers.every(d => d.bought), obtenu: false },
+            { nom: "Sir Lewis Hamilton", description: "through goes hamilton", condition: () => getDrivers().some(d => d.name === "Lewis Hamilton"), obtenu: false },
+
         ];
 
         function resetGame() {
@@ -751,6 +770,8 @@
                 // Réinitialiser les améliorations
                 upgrades.forEach(u => u.bought = false);
 
+                drivers.forEach(d => d.bought = false);
+
                 // Réinitialiser les circuits
                 tracks.forEach(t => t.bought = false);
 
@@ -781,6 +802,7 @@
                 carsLegendaire: carsLegendaire.map(c => ({ count: c.count || 0 })),
                 carsMythique: carsMythique.map(c => ({ count: c.count || 0 })),
                 upgrades: upgrades.map(upg => ({ bought: !!upg.bought })),
+                drivers: drivers.map(dri => ({ bought: !!dri.bought })),
                 tracks: tracks.map(trk => ({ bought: !!trk.bought })),
                 lastSave: Date.now(),
                 totalPlayTime: (totalPlayTime || 0) + elapsedThisSession,
@@ -822,6 +844,9 @@
             if (data.carsMythique) data.carsMythique.forEach((c, i) => { if (carsMythique[i]) carsMythique[i].count = c.count || 0; });
 
             if (data.upgrades) data.upgrades.forEach((u, i) => { if (upgrades[i]) upgrades[i].bought = !!u.bought; });
+
+            if (data.drivers) data.drivers.forEach((d, i) => { if (drivers[i]) drivers[i].bought = !!d.bought; });
+
             if (data.tracks) data.tracks.forEach((t, i) => { if (tracks[i]) tracks[i].bought = !!t.bought; });
 
             if (data.succes) data.succes.forEach((s, i) => { if (succes[i]) succes[i].obtenu = !!s.obtenu; });
@@ -885,13 +910,13 @@
                     const card = document.createElement("div");
                     card.className = "card";
                     card.innerHTML = `
-                                                            <p>
-                                                                ${car.name}<br>
-                                                                💰 ${formatNumber(cost)}<br>
-                                                                🚗 ${car.count}<br>
-                                                                ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
-                                                                ⚡ CPS total : ${formatNumber(car.count * car.cps)}
-                                                            </p>
+                                                                <p>
+                                                                    ${car.name}<br>
+                                                                    💰 ${formatNumber(cost)}<br>
+                                                                    🚗 ${car.count}<br>
+                                                                    ⚡ CPS unitaire : ${formatNumber(car.cps)}<br> <!-- 🆕 Ligne ajoutée -->
+                                                                    ⚡ CPS total : ${formatNumber(car.count * car.cps)}
+                                                                </p>
 `;
                     card.onclick = () => {
                         if (credits >= cost) {
@@ -935,6 +960,29 @@
                         }
                     }
                     upgDiv.appendChild(card);
+                }
+            });
+
+            // Pilotes
+            const driDiv = document.getElementById("drivers");
+            driDiv.innerHTML = "";
+            drivers.forEach((dri) => {
+                if (!dri.bought) {
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHTML = `<p>${dri.name}<br>💰 ${formatNumber(dri.cost)}<br></p>`;
+                    card.onclick = () => {
+                        if (credits >= dri.cost) {
+                            credits -= dri.cost;
+                            dri.bought = true;
+                            dri.effect();
+                            updateCreditsDisplay();
+                            renderShop();
+                            saveGame();
+                            verifierSucces();
+                        }
+                    }
+                    driDiv.appendChild(card);
                 }
             });
 
@@ -1073,11 +1121,11 @@
                 succes.forEach(s => {
                     const classe = s.obtenu ? "succes-obtenu" : "succes-non-obtenu";
                     succesDiv.innerHTML += `
-                                                            <div class="card ${classe}" style="margin:5px; padding:10px;">
-                                                                <strong>${s.nom}</strong><br>
-                                                                <span>${s.description}</span>
-                                                            </div>
-                                                            `;
+                                                                <div class="card ${classe}" style="margin:5px; padding:10px;">
+                                                                    <strong>${s.nom}</strong><br>
+                                                                    <span>${s.description}</span>
+                                                                </div>
+                                                                `;
                 });
                 succesDiv.style.display = "block";
             }
@@ -1090,11 +1138,11 @@
                 } else {
                     upgradesAchetees.forEach(upg => {
                         upgradesDiv.innerHTML += `
-                                                                                                                                                                                                                        <div class="card succes-obtenu" style="margin:5px; padding:10px;">
-                                                                                                                                                                                                                            <strong>${upg.name}</strong><br>
-                                                                                                                                                                                                                            <span>${upg.desc}</span>
-                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                    `;
+                                                                                                                                                                                                                            <div class="card succes-obtenu" style="margin:5px; padding:10px;">
+                                                                                                                                                                                                                                <strong>${upg.name}</strong><br>
+                                                                                                                                                                                                                                <span>${upg.desc}</span>
+                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                        `;
                     });
                 }
                 upgradesDiv.style.display = "block";
