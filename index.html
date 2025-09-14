@@ -63,6 +63,7 @@
         .tab-content {
             display: none;
             padding: 20px 10px;
+            padding-top: 60px; /* laisse un espace sous le header fixe */
         }
 
             .tab-content.active {
@@ -175,6 +176,9 @@
         }
 
         @media (max-width: 600px) {
+            body {
+                padding-top: 180px; /* au lieu de 130px, ajuste selon la taille réelle du header */
+            }
             .card, .track-card {
                 width: calc(90% - 12px);
             }
